@@ -40,9 +40,7 @@ class MY_Controller extends CI_Controller
 						}else
 						{
 							$decoded_array = (array) $decoded;
-							// print_r($decoded_array);
 							$this->sno = $decoded_array['sno'];
-							// echo $this->sno;
 							
 						}
 				}

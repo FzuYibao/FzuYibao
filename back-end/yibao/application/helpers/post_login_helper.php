@@ -104,6 +104,8 @@ function post_login($sno,$password)
 
 							}
 
+							$user['nickname'] = "";
+
 							$preg_phone = "/本人电话\s+(.*?)\s+E-mail/is";
 							if(preg_match_all($preg_phone, $content, $array))
 							{
@@ -123,6 +125,7 @@ function post_login($sno,$password)
 								$user['grade'] = $array[1][0];
 							}
 
+							$user['avatar_path'] = "";
 							return $user;
 					}else{
 						return false;
