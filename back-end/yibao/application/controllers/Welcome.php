@@ -20,13 +20,8 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		// $this->load->view('welcome_message');
-		// $this->load->helper('render');
-		$data = array(
-			'user_name' => '反反复复'
+		$this->load->view('welcome_message');
 
-		);
-		echo_json($data);
 
 	}
 }

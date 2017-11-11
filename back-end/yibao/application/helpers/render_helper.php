@@ -19,14 +19,17 @@ function echo_success($data) {
 }
 
 
-function echo_failure($message,$error_code) {
+function echo_failure($error_code,$message) {
 
 	$json = array(
-		'message' => $message,
-		'error_code' => $error_code
+		'error_code' => $error_code,
+		'message' => $message
 	);
     echo json_encode ( $json, JSON_UNESCAPED_UNICODE );
 
 }
+
+
+
 
 ?>
