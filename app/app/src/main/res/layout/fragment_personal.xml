@@ -44,20 +44,6 @@
                 android:orientation="vertical"
                 >
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/custom_dp_50"
-                    android:orientation="horizontal"
-                    >
-
-                    <ImageView
-                        android:layout_width="@dimen/custom_dp_40"
-                        android:layout_height="@dimen/custom_dp_40"
-                        android:layout_margin="10dp"
-                        />
-
-                </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
