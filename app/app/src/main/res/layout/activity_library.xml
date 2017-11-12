@@ -3,31 +3,59 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="110dp"
         android:background="@color/albumColorPrimary">
+
         <ImageView
-            android:src="@drawable/search"
-            android:layout_toRightOf="@+id/edit_search"
-            android:layout_marginTop="40dp"
+            android:id="@+id/imageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="@dimen/album_dp_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView" />
+            android:layout_marginTop="70dp"
+            android:src="@drawable/search"
+            android:layout_toEndOf="@+id/edit_search" />
+
         <EditText
             android:id="@+id/edit_search"
-            android:background="@color/colorWhite"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="230dp"
+            android:layout_height="30dp"
             android:layout_marginStart="78dp"
-            android:layout_centerVertical="true" />
+            android:layout_marginTop="75dp"
+            android:background="@color/colorWhite"
+            android:hint="Search"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="福大图书馆"
+            android:textColor="@color/colorWhite"
+            android:textSize="40sp" />
 
     </RelativeLayout>
 
+    <TextView
+        android:background="@color/albumColorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_40"
+        android:text="当前馆藏数量"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"/>
+
+
+
     <ListView
+        android:id="@+id/donative_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
     </ListView>
 

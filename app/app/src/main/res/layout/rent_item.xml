@@ -50,13 +50,13 @@
         //一个圆型的头像图片，暂由ImageView代替
         <ImageView
             android:id="@+id/donator_image"
-            android:src="@drawable/settings"
+            android:src="@drawable/nav_icon"
             android:layout_toRightOf="@id/donator"
             android:layout_below="@id/book_name"
             android:paddingLeft="@dimen/custom_dp_5"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
         <TextView
             android:layout_width="wrap_content"

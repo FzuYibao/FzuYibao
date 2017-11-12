@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/albumColorPrimary">
+
+        <EditText
+            android:id="@+id/edit_search"
+            android:layout_width="230dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="78dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorWhite"
+            android:hint="Something to search"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电动车"
+
+            />
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="锐捷"
+
+            />
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="洗衣机"
+
+            />
+
+
+    </android.support.design.widget.TabLayout>
+
+
+</LinearLayout>
