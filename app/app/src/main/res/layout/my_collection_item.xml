@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_marginTop="@dimen/custom_dp_20"
+            android:layout_marginBottom="@dimen/album_dp_10"
+            android:layout_marginLeft="@dimen/custom_dp_20"
+            android:layout_width="@dimen/custom_dp_80"
+            android:layout_height="@dimen/custom_dp_80" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/collect_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+
+                android:text="编译原理"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="@dimen/album_dp_10"
+                android:textSize="35sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/custom_dp_30"
+                android:layout_marginTop="@dimen/album_dp_10"
+                android:text="¥20"
+                android:textSize="30sp"
+                android:layout_below="@+id/collect_name"/>
+
+            <ImageView
+                android:src="@drawable/collect2"
+                android:layout_width="@dimen/custom_dp_40"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/collect_name"
+                android:layout_marginBottom="@dimen/album_dp_10"
+                android:layout_marginLeft="210dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:background="@color/colorGray"/>
+    
+
+</LinearLayout>

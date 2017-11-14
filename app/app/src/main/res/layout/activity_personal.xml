@@ -70,11 +70,13 @@
                     android:textSize="30sp" />
 
                 <ImageView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="65dp"
+
+                    android:src="@drawable/right_arrow"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:paddingLeft="20dp" />
+                    />
 
             </LinearLayout>
             <View
@@ -89,7 +91,8 @@
                 android:layout_height="65dp">
 
                 <ImageView
-                    android:src="@drawable/lead_pencil"
+                    android:src="@drawable/merchandise_to_sell"
+                    android:padding="4dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
@@ -107,11 +110,13 @@
                     android:textSize="30sp" />
 
                 <ImageView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="65dp"
+
+                    android:src="@drawable/right_arrow"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:paddingLeft="20dp" />
+                    />
 
             </LinearLayout>
             <View
@@ -126,7 +131,8 @@
                 android:layout_height="65dp">
 
                 <ImageView
-                    android:src="@drawable/collect2"
+                    android:src="@drawable/my_collection"
+                    android:padding="4dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
@@ -144,13 +150,16 @@
                     android:textSize="30sp" />
 
                 <ImageView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="65dp"
+
+                    android:src="@drawable/right_arrow"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:paddingLeft="20dp" />
+                    />
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -163,7 +172,8 @@
                 android:layout_height="65dp">
 
                 <ImageView
-                    android:src="@drawable/settings"
+                    android:padding="4dp"
+                    android:src="@drawable/about_us"
                     android:layout_marginLeft="30dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
@@ -181,11 +191,13 @@
                     android:textSize="30sp" />
 
                 <ImageView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="65dp"
+
+                    android:src="@drawable/right_arrow"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:paddingLeft="20dp" />
+                    />
 
             </LinearLayout>
             <View
@@ -200,6 +212,7 @@
                 android:layout_height="65dp">
 
                 <ImageView
+                    android:padding="4dp"
                     android:src="@drawable/settings"
                     android:layout_marginLeft="30dp"
                     android:layout_marginBottom="5dp"
@@ -218,11 +231,13 @@
                     android:textSize="30sp" />
 
                 <ImageView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="65dp"
+
+                    android:src="@drawable/right_arrow"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:paddingLeft="20dp" />
+                    />
 
             </LinearLayout>
             <View
@@ -252,14 +267,8 @@
 
             </LinearLayout>
 
-
-
-
         </LinearLayout>
 
-
-
     </ScrollView>
-
 
 </LinearLayout>
