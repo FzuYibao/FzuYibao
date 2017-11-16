@@ -30,18 +30,19 @@ public class NetworkUtil {
     public static String MAINURL = "https://interface.fty-web.com/";
     public static String LOGINURL = "auth/login";
     public static String POSTAVATARURL = "user/update_avatar";
+    public static String UPDATEUSERMESSAGEURL = "user/update_user_info";
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
-    public static LoginBean Login(String sno, String password){
+    public static LoginBean Login(String sno, String password) {
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
         Response response;
         RequestBody requestBody = new FormBody.Builder()
-                .add("sno" , sno)
-                .add("password" , password)
+                .add("sno", sno)
+                .add("password", password)
                 .build();
         Request request = new Request.Builder()
-                .url(MAINURL+LOGINURL)
+                .url(MAINURL + LOGINURL)
                 .post(requestBody)
                 .build();
         try {
@@ -49,7 +50,7 @@ public class NetworkUtil {
             result = new String(response.body().bytes());
             Log.d("login", result);
             Gson gson = new Gson();
-            Type type = new TypeToken<LoginBean>(){}.getType();
+            Type type = new TypeToken<LoginBean>() {}.getType();
             LoginBean bean = gson.fromJson(result, type);
             return bean;
         } catch (IOException e) {
@@ -58,18 +59,18 @@ public class NetworkUtil {
         }
     }
 
-    public static String PostAvatar(Context context, String imagePath){
+    public static String PostAvatar(Context context, String imagePath) {
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         File file = new File(imagePath);
-        if(file != null) {
-            builder.addFormDataPart("jwt" , UserEntity.getJwt());
+        if (file != null) {
+            builder.addFormDataPart("jwt", UserEntity.getJwt());
             builder.addFormDataPart("avatar", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
         }
         MultipartBody requestBody = builder.build();
         Request request = new Request.Builder()
-                .url(MAINURL+POSTAVATARURL)
+                .url(MAINURL + POSTAVATARURL)
                 .post(requestBody)
                 .build();
         try {
@@ -77,7 +78,8 @@ public class NetworkUtil {
             result = new String(response.body().bytes());
             Log.d("postAvatar", result);
             Gson gson = new Gson();
-            Type type = new TypeToken<GetAvatarBean>(){}.getType();
+            Type type = new TypeToken<GetAvatarBean>() {
+            }.getType();
             GetAvatarBean bean = gson.fromJson(result, type);
             return bean.getData().getAvatar().getAvatar_path();
         } catch (IOException e) {

@@ -3,14 +3,35 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:background="@color/colorPrimary"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/custom_dp_40"
-        android:text="当前馆藏数量"
-        android:textSize="20sp"
-        android:textColor="@color/colorWhite"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        >
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_height="@dimen/custom_dp_40"
+            android:text="当前馆藏数量 "
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/text"
+            android:id="@+id/book_number"
+            android:text="207"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/custom_dp_40"
+            />
+
+    </RelativeLayout>
+
+
 
 
 

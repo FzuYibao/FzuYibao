@@ -2,6 +2,7 @@ package com.maple27.fzuyibao.view.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.presenter.util.GlideImageLoader;
 import com.maple27.fzuyibao.view.activity.MainActivity;
+import com.maple27.fzuyibao.view.activity.MyMessage;
 import com.maple27.fzuyibao.view.custom_view.CircleImageView;
 import com.yanzhenjie.album.Album;
 
@@ -27,6 +30,8 @@ public class PersonalFragment extends Fragment {
     private Activity activity;
     private Context context;
     private CircleImageView avatar;
+    private TextView myInfo;
+
 
     @Nullable
     @Override
@@ -42,6 +47,17 @@ public class PersonalFragment extends Fragment {
         avatar = (CircleImageView) view.findViewById(R.id.avatar);
         GlideImageLoader imageLoader = new GlideImageLoader();
         imageLoader.displayImage(context, UserEntity.getAvatar_path(), avatar);
+
+        myInfo =(TextView) view.findViewById(R.id.personal_myInfo);
+        myInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MyMessage.class);
+                context.startActivity(intent);
+            }
+        });
+
+
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

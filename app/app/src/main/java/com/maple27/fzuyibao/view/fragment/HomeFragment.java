@@ -1,5 +1,6 @@
 package com.maple27.fzuyibao.view.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ public class HomeFragment extends Fragment {
     private ImageView library;
     private ImageView market;
     private ImageView seek;
+    private Activity activity;
 
     @Nullable
     @Override
@@ -48,7 +50,8 @@ public class HomeFragment extends Fragment {
         library = (ImageView) view.findViewById(R.id.library);
         market = (ImageView) view.findViewById(R.id.market);
         seek = (ImageView) view.findViewById(R.id.seek);
-        InitUtil.initHomeFragment(context, refresh, searchView, banner, l_m, library, market, seek);
+        activity = getActivity();
+        InitUtil.initHomeFragment(activity, context, refresh, searchView, banner, l_m, library, market, seek);
     }
 
 }
