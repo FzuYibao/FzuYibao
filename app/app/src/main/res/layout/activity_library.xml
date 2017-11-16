@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_40"
+        android:text="当前馆藏数量"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"/>
+
+
+
+    <ListView
+        android:id="@+id/lv_library"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </ListView>
+
+</LinearLayout>

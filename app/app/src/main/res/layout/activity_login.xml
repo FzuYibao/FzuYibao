@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:text="登            录"
+        android:textSize="20sp"
+        android:background="@drawable/corner_button"
+        android:layout_below="@+id/passwordLayout_login"
+        android:layout_marginTop="@dimen/custom_dp_10"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/userLayout_login"
+        android:textColorHint="@color/colorBlack"
+        android:layout_below="@+id/logo_login"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        >
+
+        <EditText
+            android:id="@+id/sno_login"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:hint="@string/sno"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/passwordLayout_login"
+        android:textColorHint="@color/colorBlack"
+        android:layout_below="@+id/userLayout_login"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        >
+
+        <EditText
+            android:id="@+id/password_login"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/logo_login"
+        android:layout_marginTop="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
