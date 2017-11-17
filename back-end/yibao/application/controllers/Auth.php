@@ -27,14 +27,16 @@ class Auth extends CI_Controller {
 		{
 
 
-				$sno = $this->input->post('sno',true);
-				$password = $this->input->post('password',true);
-				// $sno = '031502212';
-				// $password = '250514';
 
-				if(isset($sno) && isset($password))
-				{
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('sno','sno','required');
+			$this->form_validation->set_rules('password','password','required');
 
+
+			if($this->form_validation->run() != false)
+			{
+					$sno = $this->input->post('sno',true);
+					$password = $this->input->post('password',true);
 
 					if($this->user_model->get_user($sno) == false) //此时数据库未有该学生的数据
 					{
@@ -51,8 +53,10 @@ class Auth extends CI_Controller {
 										'sno' => $sno,
 										'phone' => $user['phone'],
 										'user_name' => $user['user_name'],
+										'nickname' => $user['nickname'],
 										'major' => $user['major'],
-										'grade' => $user['grade']
+										'grade' => $user['grade'],
+										'avatar_path' => $user['avatar_path']
 									);
 
 									$uid = $this->user_model->add_user($data);//对学生数据进行插入
@@ -65,7 +69,8 @@ class Auth extends CI_Controller {
 									{
 										$key = "salt:let's encrypt";
 										$token = array(
-										"uid"		=> $sno,
+
+										"sno"		=> $sno,
 									    "exp"       => $_SERVER['REQUEST_TIME']+604800
 									    // "exp"       => $_SERVER['REQUEST_TIME']-1
 
@@ -96,7 +101,10 @@ class Auth extends CI_Controller {
 							$data = $this->user_model->get_info($sno);
 							$key = "salt:let's encrypt";
 							$token = array(
-							"uid"		=> $sno,
+
+
+							"sno"		=> $sno,
+
 						    "exp"       => $_SERVER['REQUEST_TIME']+604800
 						    // "exp"       => $_SERVER['REQUEST_TIME']-1
 
@@ -115,7 +123,14 @@ class Auth extends CI_Controller {
 						}
 					}
 
-				}
+			}else
+			{
+				$message = trim(strip_tags(validation_errors())) ;
+				throw new Exception($message, 1);
+			}
+
+
+
 		}
 		catch(Exception $e)
 		{
@@ -161,8 +176,6 @@ class Auth extends CI_Controller {
 
 				$sno = $this->input->post('sno',true);
 				$password = $this->input->post('password',true);
-				// $sno = '031502212';
-				// $password = '250514';
 
 				if(isset($sno) && isset($password))
 				{
