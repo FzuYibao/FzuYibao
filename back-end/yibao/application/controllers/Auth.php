@@ -69,6 +69,7 @@ class Auth extends CI_Controller {
 									{
 										$key = "salt:let's encrypt";
 										$token = array(
+
 										"sno"		=> $sno,
 									    "exp"       => $_SERVER['REQUEST_TIME']+604800
 									    // "exp"       => $_SERVER['REQUEST_TIME']-1
@@ -100,7 +101,10 @@ class Auth extends CI_Controller {
 							$data = $this->user_model->get_info($sno);
 							$key = "salt:let's encrypt";
 							$token = array(
+
+
 							"sno"		=> $sno,
+
 						    "exp"       => $_SERVER['REQUEST_TIME']+604800
 						    // "exp"       => $_SERVER['REQUEST_TIME']-1
 
@@ -172,8 +176,6 @@ class Auth extends CI_Controller {
 
 				$sno = $this->input->post('sno',true);
 				$password = $this->input->post('password',true);
-				// $sno = '031502212';
-				// $password = '250514';
 
 				if(isset($sno) && isset($password))
 				{
