@@ -1,6 +1,8 @@
 package com.maple27.fzuyibao.presenter.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,6 +14,9 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.presenter.adapter.MainAdapter;
+import com.maple27.fzuyibao.view.activity.LMActivity;
+import com.maple27.fzuyibao.view.activity.LibraryActivity;
+import com.maple27.fzuyibao.view.activity.MarketActivity;
 import com.maple27.fzuyibao.view.fragment.HomeFragment;
 import com.maple27.fzuyibao.view.fragment.MessageFragment;
 import com.maple27.fzuyibao.view.fragment.PersonalFragment;
@@ -74,7 +79,7 @@ public class InitUtil {
     }
 
     //初始化HomeFragment
-    public static void initHomeFragment(final Context context, final SmartRefreshLayout refresh, FloatingSearchView searchView,
+    public static void initHomeFragment(final Activity activity, final Context context, final SmartRefreshLayout refresh, FloatingSearchView searchView,
                                         Banner banner, ImageView l_m, ImageView library, ImageView market, ImageView seek){
 
         //Refresh控件
@@ -112,12 +117,48 @@ public class InitUtil {
         banner.start();
         //跳转控件
         //class A extends View.OnClickListener
+        l_m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, LMActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        library.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, LibraryActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        market.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, MarketActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+
+
+
+
+
+
+
 
     }
+
+
+
 
     public static void initLibraryActivity(){
 
     }
+
+
 
 
 }

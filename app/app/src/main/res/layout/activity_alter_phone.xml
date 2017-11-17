@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray"
+
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_20"/>
+
+    <EditText
+        android:paddingLeft="@dimen/custom_dp_20"
+        android:textSize="22sp"
+        android:id="@+id/alter_new_phone"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_50" />
+
+
+    <Button
+        android:id="@+id/alter_commit"
+        android:layout_width="@dimen/custom_dp_100"
+        android:layout_height="@dimen/custom_dp_40"
+        android:layout_marginLeft="270dp"
+        android:layout_marginTop="@dimen/custom_dp_20"
+        android:background="@color/colorWhite"
+        android:text="确  认"
+        android:textSize="20sp"/>
+
+    <View
+        android:background="@color/colorGray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
+
+</LinearLayout>
