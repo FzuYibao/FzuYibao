@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="180dip"
+            android:layout_height="120dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dip"
+            android:adjustViewBounds="true"
+            android:background="@android:color/black"
+            android:scaleType="fitCenter"
+            android:src="@drawable/t01e6fcd951594aa6dc" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dip"
+            android:gravity="center_horizontal"
+            android:text="用户注册"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="240dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="0dip"
+            android:hint="请输入您的邮箱"
+            android:maxLength="200"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="240dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dip"
+            android:hint="请设置密码"
+            android:maxLength="200"
+            android:textSize="18sp" />
+        <EditText
+            android:layout_width="240dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dip"
+            android:hint="请确认密码"
+            android:maxLength="200"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="240dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="#c6c3c6"
+            android:minHeight="54dip"
+            android:orientation="horizontal"
+            android:paddingBottom="4dip"
+            android:paddingLeft="2dip"
+            android:paddingRight="2dip"
+            android:paddingTop="4dip">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="5dip"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="确定 "
+                android:textSize="18sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="10dip"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="取消"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ImageBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="30dip"
+                android:adjustViewBounds="true"
+                android:background="#FF777777"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_dialog_email" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+
+
+
+
