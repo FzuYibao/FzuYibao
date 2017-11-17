@@ -1,7 +1,10 @@
 package com.maple27.fzuyibao.view.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import com.maple27.fzuyibao.R;
@@ -26,6 +29,14 @@ public class MyMessage extends AppCompatActivity {
         setContentView(R.layout.activity_my_message);
         init();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        phone.setText(UserEntity.getPhone());
+        nickname.setText(UserEntity.getNickname());
+    }
+
     public void init(){
         avatar = (CircleImageView) findViewById(R.id.my_message_avatar) ;
         GlideImageLoader imageLoader = new GlideImageLoader();
@@ -40,6 +51,21 @@ public class MyMessage extends AppCompatActivity {
         major.setText(UserEntity.getMajor());
         grade.setText(UserEntity.getGrade());
         phone.setText(UserEntity.getPhone());
+        nickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyMessage.this,AlterNickname.class);
+                startActivity(intent);
+            }
+        });
+
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyMessage.this,AlterPhone.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

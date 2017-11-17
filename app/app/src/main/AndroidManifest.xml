@@ -23,14 +23,17 @@
         <activity android:name=".view.activity.LMActivity" />
         <activity android:name=".view.activity.MarketActivity" />
         <activity android:name=".view.activity.LibraryActivity" />
-        <activity android:name=".view.activity.SeekActivity"></activity>
+        <activity android:name=".view.activity.SeekActivity" />
         <activity
             android:name="com.yanzhenjie.album.AlbumActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="图库"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
-        <activity android:name=".view.activity.MyMessage"></activity>
+        <activity android:name=".view.activity.MyMessage" />
+        <activity android:name=".view.activity.AlterNickname" />
+        <activity android:name=".view.activity.AlterPhone" />
+        <activity android:name=".view.activity.Setting"></activity>
     </application>
 
 </manifest>

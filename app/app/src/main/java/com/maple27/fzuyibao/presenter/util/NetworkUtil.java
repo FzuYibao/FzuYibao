@@ -20,6 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by Maple27 on 2017/11/13.
@@ -30,9 +31,10 @@ public class NetworkUtil {
     public static String MAINURL = "https://interface.fty-web.com/";
     public static String LOGINURL = "auth/login";
     public static String POSTAVATARURL = "user/update_avatar";
-    public static String UPDATEUSERMESSAGEURL = "user/update_user_info";
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
+    public static String UPDATEUSERMESSAGEURL = "user/update_user_info";
+
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
     public static LoginBean Login(String sno, String password) {
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -87,5 +89,66 @@ public class NetworkUtil {
             return "error";
         }
     }
+
+
+    public static LoginBean AlterNickname(Context context, String newNickname) {
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt",UserEntity.getJwt())
+                .add("nickname",newNickname)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL + UPDATEUSERMESSAGEURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("alterNickname", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<LoginBean>() {
+            }.getType();
+            LoginBean bean = gson.fromJson(result,type);
+            return bean;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static LoginBean AlterPhone(Context context, String newPhone) {
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt",UserEntity.getJwt())
+                .add("phone",newPhone)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL + UPDATEUSERMESSAGEURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("alterPhone", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<LoginBean>() {
+            }.getType();
+            LoginBean bean = gson.fromJson(result,type);
+            return bean;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
 
 }

@@ -214,6 +214,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.2">
+        <Button
+            android:layout_marginTop="@dimen/custom_dp_20"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/custom_dp_40"
+            android:text="注         销"
+            android:textColor="@color/colorRed"
+            android:background="@color/colorWhite"
+            android:textSize="26sp"/>
 
     </LinearLayout>
 
