@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +17,12 @@ import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.model.bean.LoginBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.presenter.util.ActivityController;
+import com.maple27.fzuyibao.presenter.util.MessageUtil;
 import com.maple27.fzuyibao.presenter.util.NetworkUtil;
 import com.maple27.fzuyibao.presenter.util.StatusBarUtil;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 
 /**
  * Created by Maple27 on 2017/11/3.
@@ -65,7 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                             String str_password = password.getText().toString();
                             bean = NetworkUtil.Login(str_sno, str_password);
                             if(bean.getError_code()==0){
-                                loginSuccess();
+                                //在登陆完我们的服务器后，还要登陆极光im
+                                MessageUtil.loginMessageClient("test", "123456", afterLoginClientCallBack());
                             }else{
                                 Looper.prepare();
                                 Toast.makeText(context, bean.getMessage(), Toast.LENGTH_SHORT).show();
@@ -95,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginSuccess(){
-
         UserEntity.setJwt(bean.getData().getUser().getJwt());
         UserEntity.setSno(bean.getData().getUser().getSno());
         UserEntity.setName(bean.getData().getUser().getUser_name());
@@ -108,11 +113,32 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+
     public boolean TokenExist(){
         pref = getSharedPreferences("userData" , MODE_PRIVATE);
         token = pref.getString("token" , null);
         if(token == null) return false;
         else return true;
+    }
+
+
+    //处理登陆极光im的逻辑写在这
+    public BasicCallback afterLoginClientCallBack(){
+        BasicCallback callback = new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                if(i == 0){
+                    //成功
+                    Log.i("LoginActivity", "afterLoginClientCallBack success:" + "  i:" + i + "  s:" + s);
+                    loginSuccess();
+                }else{
+                    //失败
+                    Log.i("LoginActivity", "afterLoginClientCallBack fail:" + "  i:" + i + "  s:" + s);
+                }
+            }
+        };
+        return callback;
     }
 
 }

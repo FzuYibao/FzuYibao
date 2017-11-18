@@ -25,4 +25,6 @@
     <color name="colorPrimary700">#0288d1</color>
     <color name="colorPrimary800">#0277bd</color>
     <color name="colorPrimary900">#01579b</color>
+
+    <color name="messageChooseBg">#E6E6FA</color>
 </resources>
