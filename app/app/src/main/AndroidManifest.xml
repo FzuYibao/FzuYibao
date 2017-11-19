@@ -140,6 +140,10 @@
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
 
         <activity android:name=".view.activity.MessageChatActivity">
+
+        </activity>
+
+        <activity android:name=".view.activity.StartMessageEntry">
         </activity>
     </application>
 

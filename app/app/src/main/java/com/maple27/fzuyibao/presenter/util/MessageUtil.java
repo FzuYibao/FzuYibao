@@ -1,14 +1,17 @@
 package com.maple27.fzuyibao.presenter.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.maple27.fzuyibao.model.entity.MessageReciverEntity;
 import com.maple27.fzuyibao.view.activity.LoginActivity;
 import com.maple27.fzuyibao.view.activity.MessageChatActivity;
+import com.maple27.fzuyibao.view.activity.StartMessageEntry;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 /**
@@ -37,10 +40,27 @@ public class MessageUtil {
         return m;
     }
 
-    //启动聊天窗口（activity）， me和reciver通过getMessageReciverEntity获得
+    //获得我（发送方）消息处理对象，该对象用于保存通讯模块使用东西
+    public static MessageReciverEntity getMessageSenderEntity(){
+        UserInfo myUserInfo = JMessageClient.getMyInfo();
+        MessageReciverEntity me = new MessageReciverEntity();
+        me.setAccount(myUserInfo.getUserName());
+        me.setNickname(myUserInfo.getNickname());
+        return me;
+    }
+
+
+
+    //启动聊天窗口（activity）， megetMessageSenderEntity, reciver通过getMessageReciverEntity获得
     public static void startMessageChatActivity(Activity activity, MessageReciverEntity me, MessageReciverEntity reciver){
         MessageChatActivity.startMessageChatActivity(activity, me, reciver);
     }
+
+    //启动展示个人信息的窗口，
+    public static void startMessageEntry(Context context, String sno){
+        StartMessageEntry.startMessageUserInfo(context, sno);
+    }
+
 
 
 }

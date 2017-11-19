@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.maple27.fzuyibao.model.bean.GetAvatarBean;
 import com.maple27.fzuyibao.model.bean.LoginBean;
+import com.maple27.fzuyibao.model.bean.UserInfoBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 
 import java.io.File;
@@ -85,5 +86,34 @@ public class NetworkUtil {
             return "error";
         }
     }
+
+
+    public static UserInfoBean getUserInfoBean(String sno){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("sno" , sno)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+"user/get_info")
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("getUserInfoBean", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<UserInfoBean>(){}.getType();
+            UserInfoBean bean = gson.fromJson(result, type);
+            return bean;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 
 }

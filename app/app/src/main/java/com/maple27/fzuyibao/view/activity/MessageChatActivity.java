@@ -306,7 +306,7 @@ public class MessageChatActivity extends AppCompatActivity implements View.OnCli
                 float nowX = motionEvent.getX();
                 long nowTime = System.currentTimeMillis();
                 WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-                float TOUCHACTIONX = wm.getDefaultDisplay().getWidth()/3;
+                float TOUCHACTIONX = wm.getDefaultDisplay().getWidth()/4;
                 if(nowTime - mLastTouchTime < TOUCHACTIONTIME){
                     if(nowX - mLastTouchX > TOUCHACTIONX){
                         //满足短时间，移动相应距离，就进行相应
