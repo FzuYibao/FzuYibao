@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_40"
+        android:id="@+id/library_num"
+        android:text="当前馆藏数量"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"/>
+
+
+
+    <ListView
+        android:id="@+id/lv_library"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/library_num"
+        >
+
+    </ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="@dimen/custom_dp_50"
+        android:layout_height="@dimen/custom_dp_50"
+        android:layout_gravity="end|bottom"
+        android:layout_alignBottom="@id/lv_library"
+        android:layout_alignEnd="@id/lv_library"
+        android:layout_margin="@dimen/custom_dp_20"
+        android:id="@+id/library_post"
+        android:src="@drawable/add"
+        app:backgroundTint="@color/colorPrimary"
+        />
+
+</RelativeLayout>

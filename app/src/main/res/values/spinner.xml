@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item>专业课资料</item>
+        <item>考研资料</item>
+        <item>课外书籍</item>
+        <item>电动车</item>
+        <item>锐捷</item>
+        <item>生活用品</item>
+    </string-array>
+</resources>

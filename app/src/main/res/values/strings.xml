@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">福大易宝</string>
+    <string name="sno">学号</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="recommend">推荐商品</string>
+    <string name="learning_material">学习资料库</string>
+    <string name="library">福大图书馆</string>
+    <string name="market">二手市场</string>
+    <string name="seek">求购信息</string>
+    <string name="scanSno">学号不能为空</string>
+    <string name="scanPassword">密码不能为空</string>
+    <string name="loginError">学号或密码错误，请重新尝试</string>
+</resources>
