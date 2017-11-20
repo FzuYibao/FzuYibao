@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.presenter.util.GlideImageLoader;
+import com.maple27.fzuyibao.presenter.util.MessageUtil;
 import com.maple27.fzuyibao.view.activity.MainActivity;
 import com.maple27.fzuyibao.view.custom_view.CircleImageView;
 import com.yanzhenjie.album.Album;

@@ -244,8 +244,8 @@ public class MessageChatActivity extends AppCompatActivity implements View.OnCli
                     m.setName(mReciver.getNickname());
                     mData.add(m);
                     //for view
-                   mAdapter.notifyDataSetChanged();;
-                   mListView.setSelection(mData.size()-1);
+                    mAdapter.notifyDataSetChanged();;
+                    mListView.setSelection(mData.size()-1);
 
                 }
                 break;
