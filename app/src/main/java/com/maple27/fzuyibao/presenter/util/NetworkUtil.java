@@ -45,8 +45,8 @@ public class NetworkUtil {
         OkHttpClient okHttpClient = new OkHttpClient();
         Response response;
         RequestBody requestBody = new FormBody.Builder()
-                .add("sno" , "031502210")
-                .add("password" , "110539")
+                .add("sno" , sno)
+                .add("password" , password)
                 .build();
         Request request = new Request.Builder()
                 .url(MAINURL+LOGINURL)
@@ -186,11 +186,12 @@ public class NetworkUtil {
         }
     }
 
-    public static UserInfoBean getUserInfoBean(String sno){
+    public static UserInfoBean getUserInfoBean(String jwt, String sno){
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
         Response response;
         RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , jwt)
                 .add("sno" , sno)
                 .build();
         Request request = new Request.Builder()

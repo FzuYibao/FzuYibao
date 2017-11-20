@@ -70,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                             String str_password = password.getText().toString();
                             bean = NetworkUtil.Login(str_sno, str_password);
                             if(bean.getError_code()==0){
-                                //loginSuccess();
-                                MessageUtil.loginMessageClient("test", "123456", afterLoginClientCallBack());
+                                savaUserEntity();
+                                MessageUtil.loginMessageClient(LoginActivity.this, str_sno, "123456", afterLoginClientCallBack());
                             }else{
                                 Looper.prepare();
                                 Toast.makeText(context, bean.getMessage(), Toast.LENGTH_SHORT).show();
@@ -100,8 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void loginSuccess(){
-
+    public void savaUserEntity(){
         UserEntity.setJwt(bean.getData().getUser().getJwt());
         UserEntity.setSno(bean.getData().getUser().getSno());
         UserEntity.setName(bean.getData().getUser().getUser_name());
@@ -110,6 +109,10 @@ public class LoginActivity extends AppCompatActivity {
         UserEntity.setMajor(bean.getData().getUser().getMajor());
         UserEntity.setGrade(bean.getData().getUser().getGrade());
         UserEntity.setAvatar_path(MAINURL+bean.getData().getUser().getAvatar_path());
+    }
+
+
+    public void loginSuccess(){
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
@@ -133,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     //失败
                     Log.i("LoginActivity", "afterLoginClientCallBack fail:" + "  i:" + i + "  s:" + s);
+                    Toast.makeText(LoginActivity.this, "登陆失败" + s, Toast.LENGTH_SHORT).show();
                 }
             }
         };

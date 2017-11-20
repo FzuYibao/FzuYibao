@@ -16,6 +16,10 @@ import com.maple27.fzuyibao.model.entity.MessageChooseViewEntity;
 import com.maple27.fzuyibao.model.entity.MessageReciverEntity;
 import com.maple27.fzuyibao.presenter.adapter.MessageChooseAdapter;
 import com.maple27.fzuyibao.view.activity.MessageChatActivity;
+import com.scwang.smartrefresh.header.WaveSwipeHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import cn.jpush.im.android.api.model.UserInfo;
 
 public class MessageFragment extends Fragment implements AdapterView.OnItemClickListener {
 
+    SmartRefreshLayout mRefresh;
     ListView mListView;
     MessageChooseAdapter mAdapter;
     List<MessageChooseViewEntity> mData = null;
@@ -97,6 +102,20 @@ public class MessageFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     private void initView(View view, LayoutInflater inflater) {
+        WaveSwipeHeader waveSwipeHeader = new WaveSwipeHeader(getContext());
+        mRefresh = (SmartRefreshLayout) view.findViewById(R.id.refresh_message);
+        mRefresh.setRefreshHeader(waveSwipeHeader);
+        mRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000);
+                //刷新请求
+                initData();
+                mAdapter.notifyDataSetChanged();
+
+            }
+        });
+
         mListView = (ListView) view.findViewById(R.id.lv_choose_message);
         mAdapter = new MessageChooseAdapter(getContext(), mData);
         mListView.setAdapter(mAdapter);

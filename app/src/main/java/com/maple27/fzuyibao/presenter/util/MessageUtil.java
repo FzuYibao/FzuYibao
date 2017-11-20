@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.maple27.fzuyibao.model.entity.MessageReciverEntity;
+import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.view.activity.LoginActivity;
 import com.maple27.fzuyibao.view.activity.MessageChatActivity;
 import com.maple27.fzuyibao.view.activity.StartMessageEntry;
@@ -13,6 +14,7 @@ import com.maple27.fzuyibao.view.activity.StartMessageEntry;
 import cn.*;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 /**
@@ -23,9 +25,34 @@ public class MessageUtil {
 
 
     //只有此方法使用后，才能正常使用通讯模块
-    public static void loginMessageClient(String account, String password, BasicCallback basicCallback){
+    public static void loginMessageClient(final Context context, final String account, final String password, final BasicCallback basicCallback){
         //登陆极光im，有异步过程
-        JMessageClient.login(account, password, basicCallback);
+        RegisterOptionalUserInfo optionalUserInfo = new RegisterOptionalUserInfo();
+        optionalUserInfo.setNickname(UserEntity.getNickname());
+        Log.i("MessageUtil", "nickname" + UserEntity.getNickname());
+        JMessageClient.register(account, password, optionalUserInfo, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                if(i == 0){
+                    //注册成功
+                    Log.i("MessageUtil", "register success:" + "  i:" + i + "  s:" + s);
+                    //开始登陆
+                    Log.i("MessageUtil", "login success:" + "  i:" + i + "  s:" + s);
+                    JMessageClient.login(account, password, basicCallback);
+
+                }else{
+                    //注册失败
+                    Log.i("MessageUtil", "register fail:" + "  i:" + i + "  s:" + s);
+                    if(s.equals("user exist")){
+                        Log.i("MessageUtil", "user exist:" + "  i:" + i + "  s:" + s);
+                        JMessageClient.login(account, password, basicCallback);
+                    }else{
+                        Log.i("MessageUtil", "user not exist error:" + "  i:" + i + "  s:" + s);
+                        Toast.makeText(context, "用户信息初始化error" + s, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     public static void registerMessageClient(String account, String password, BasicCallback basicCallback){
