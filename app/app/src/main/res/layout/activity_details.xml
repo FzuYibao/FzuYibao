@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/details_toolbar"
+        app:contentInsetStart="0dp"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="商品详情"
+            android:textSize="@dimen/custom_sp_24"
+            android:textColor="@color/colorWhite"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+        <com.youth.banner.Banner
+            android:id="@+id/details_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/custom_dp_200" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/custom_dp_20"
+                android:layout_marginTop="@dimen/custom_dp_10"
+                android:layout_marginBottom="@dimen/custom_dp_10"
+                android:id="@+id/details_name"
+                android:maxLines="1"
+                android:text="概率论练习册"
+                android:textSize="@dimen/custom_sp_24"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_info"
+                android:text="这是这本书的详情介绍，balabalabala。。。。"
+                android:layout_below="@+id/details_name"
+                android:layout_alignStart="@+id/details_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/custom_dp_10"
+                android:layout_marginEnd="@dimen/custom_dp_10"
+                android:id="@+id/details_price"
+                android:maxLines="1"
+                android:text="$30.0"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/custom_sp_20"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/custom_dp_40"
+                android:orientation="horizontal"
+                android:layout_below="@+id/details_info"
+                android:layout_marginTop="@dimen/custom_dp_10"
+                android:layout_marginStart="@dimen/custom_dp_20"
+                android:id="@+id/details_userInfo"
+                >
+
+                <com.maple27.fzuyibao.view.custom_view.CircleImageView
+                    android:layout_width="@dimen/custom_dp_30"
+                    android:layout_height="@dimen/custom_dp_30"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/details_avatar"
+                    android:src="@drawable/nav_icon"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/custom_dp_30"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="@dimen/custom_dp_10"
+                    android:id="@+id/details_userName"
+                    android:text="麻瓜一号"
+                    android:textColor="@color/albumColorPrimary"
+                    android:textSize="@dimen/custom_sp_20"
+                    />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/custom_dp_30"
+                android:layout_below="@+id/details_userInfo"
+                android:layout_marginStart="@dimen/custom_dp_20"
+                android:gravity="center_vertical"
+                android:id="@+id/details_time"
+                android:text="发布时间：2017-12-05 21:25:30"
+                android:textSize="@dimen/custom_sp_16"
+                />
+
+
+
+        </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/custom_dp_30"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        android:id="@+id/details_connect"
+        android:text="联  系  卖  家"
+        android:textColor="@color/colorPrimary50"
+        android:textSize="@dimen/custom_sp_20"
+        android:background="@drawable/corner_button"
+        />
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorGray"
+
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/alter_phone_toolbar"
+        app:contentInsetStart="0dp"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="修改手机号"
+            android:textSize="@dimen/custom_sp_24"
+            android:textColor="@color/colorWhite"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_20"/>
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <EditText
+            android:paddingLeft="@dimen/custom_dp_20"
+            android:textSize="22sp"
+            android:id="@+id/alter_new_phone"
+            android:background="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/custom_dp_50" />
+
+    <ImageView
+        android:id="@+id/delete_phone"
+        android:layout_width="@dimen/custom_dp_30"
+        android:layout_height="@dimen/custom_dp_30"
+        android:layout_marginRight="@dimen/custom_dp_10"
+        android:layout_gravity="center"
+        android:src="@drawable/delete_text"/>
+</LinearLayout>
+
+    <View
+        android:background="@color/colorGray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
+
+</LinearLayout>

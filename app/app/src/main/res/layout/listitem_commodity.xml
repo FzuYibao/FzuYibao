@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/custom_dp_150"
+    android:minHeight="@dimen/custom_dp_150"
+    >
+
+    <ImageView
+        android:id="@+id/commodity_image"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/commodity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/custom_dp_10"
+            android:maxLines="1"
+            android:layout_marginTop="@dimen/custom_dp_10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/custom_sp_24" />
+
+        <TextView
+            android:id="@+id/commodity_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/commodity_name"
+            android:layout_below="@+id/commodity_name"
+            android:textSize="@dimen/custom_sp_16" />
+
+        <TextView
+            android:id="@+id/commodity_price"
+            android:layout_width="@dimen/custom_dp_80"
+            android:layout_height="@dimen/custom_dp_30"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/commodity_name"
+            android:layout_marginBottom="@dimen/custom_dp_10"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/custom_sp_20" />
+
+        <com.maple27.fzuyibao.view.custom_view.CircleImageView
+            android:id="@+id/commodity_avatar"
+            android:layout_width="@dimen/custom_dp_30"
+            android:layout_height="@dimen/custom_dp_30"
+            android:layout_alignTop="@+id/commodity_price"
+            android:layout_toRightOf="@id/commodity_price"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/custom_dp_30"
+            android:layout_alignTop="@+id/commodity_avatar"
+            android:layout_marginStart="5dp"
+            android:layout_toRightOf="@+id/commodity_avatar"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/custom_sp_18"
+            android:id="@+id/commodity_username"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

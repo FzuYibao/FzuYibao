@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/refresh_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="@color/colorWhite"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <com.arlib.floatingsearchview.FloatingSearchView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/custom_dp_50"
+                android:id="@+id/search_bar_home"
+                app:floatingSearch_leftActionMode="showSearch"
+                >
+            </com.arlib.floatingsearchview.FloatingSearchView>
+
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/custom_dp_200" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/custom_dp_80"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/custom_dp_70"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/l_m"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_40"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/learning_material" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_30"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/learning_material"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/custom_dp_70"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_40"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/library"
+                        android:src="@drawable/library"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_30"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="@string/library"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:maxLines="1"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/custom_dp_70"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_40"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/market"
+                        android:src="@drawable/market"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_30"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="@string/market"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:maxLines="1"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/custom_dp_70"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_40"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/seek"
+                        android:src="@drawable/seek"
+                        />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/custom_dp_30"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="@string/seek"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:maxLines="1"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/custom_dp_50"
+                android:layout_marginTop="@dimen/custom_dp_10"
+                android:background="@color/colorGray"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/custom_dp_10"
+                    android:text="@string/recommend"
+                    android:textSize="@dimen/custom_dp_20"
+                    android:textColor="@color/colorRed"
+
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="@dimen/custom_dp_50"
+        android:layout_height="@dimen/custom_dp_50"
+        android:layout_marginTop="-70dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/custom_dp_20"
+        android:id="@+id/post"
+        android:src="@drawable/add"
+        app:backgroundTint="@color/colorPrimary"
+        />
+
+
+
+
+</LinearLayout>

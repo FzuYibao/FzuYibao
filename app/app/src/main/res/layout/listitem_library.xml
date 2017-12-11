@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:orientation="horizontal"
+    >
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="@dimen/custom_dp_10"
+        android:id="@+id/book_image"
+        />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/book_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/custom_dp_10"
+            android:maxLines="1"
+            android:paddingTop="@dimen/custom_dp_10"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/custom_sp_24" />
+
+        <TextView
+            android:id="@+id/book_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/album_dp_10"
+            android:layout_marginTop="15dp"
+            android:textSize="@dimen/custom_sp_18" />
+
+        <TextView
+            android:id="@+id/book_donator_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/book_name"
+            android:layout_marginLeft="@dimen/album_dp_10"
+            android:layout_marginTop="@dimen/custom_dp_10"
+            android:text="书主："
+            android:textSize="@dimen/custom_sp_16" />
+
+        <com.maple27.fzuyibao.view.custom_view.CircleImageView
+            android:id="@+id/book_donator_avatar"
+            android:layout_width="@dimen/custom_dp_20"
+            android:layout_height="@dimen/custom_dp_20"
+            android:layout_alignTop="@+id/book_donator_t"
+            android:layout_below="@id/book_name"
+            android:layout_marginLeft="@dimen/custom_dp_10"
+            android:layout_toRightOf="@id/book_donator_t" />
+
+        <TextView
+            android:id="@+id/book_donator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/book_donator_t"
+            android:layout_alignBottom="@+id/book_donator_t"
+            android:layout_toEndOf="@+id/book_donator_avatar"
+            android:maxLines="1"
+            android:textSize="@dimen/custom_sp_16" />
+
+        <TextView
+            android:id="@+id/book_rent_times_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/book_donator"
+            android:paddingLeft="@dimen/album_dp_10"
+            android:paddingTop="@dimen/album_dp_10"
+            android:text="租借次数："
+            android:textSize="@dimen/album_sp_16" />
+
+        <TextView
+            android:id="@+id/book_rent_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/book_donator"
+            android:layout_toRightOf="@+id/book_rent_times_t"
+            android:paddingTop="@dimen/album_dp_10"
+            android:textSize="@dimen/custom_sp_16" />
+
+        <TextView
+            android:id="@+id/book_deathLine_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/book_rent_times"
+            android:layout_marginLeft="@dimen/custom_dp_10"
+            android:layout_marginTop="@dimen/custom_dp_10"
+            android:layout_marginBottom="@dimen/custom_dp_10"
+            android:text="到期时间："
+            android:textSize="@dimen/custom_sp_16" />
+
+
+        <TextView
+            android:id="@+id/book_deathLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/book_rent_times"
+            android:layout_toRightOf="@+id/book_deathLine_t"
+            android:maxLines="1"
+            android:paddingTop="@dimen/album_dp_10"
+            android:textSize="@dimen/custom_sp_16" />
+
+        <Button
+            android:id="@+id/book_rent"
+            android:layout_width="@dimen/custom_dp_70"
+            android:layout_height="@dimen/custom_dp_30"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/custom_dp_20"
+            android:background="@drawable/corner_button"
+            android:text="租   借"
+            android:textColor="@color/colorWhite"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+

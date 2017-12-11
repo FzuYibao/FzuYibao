@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:text="登            录"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/corner_button"
+        android:layout_below="@+id/passwordLayout_login"
+        android:layout_marginTop="@dimen/custom_dp_10"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/userLayout_login"
+        android:textColorHint="@color/colorBlack"
+        android:layout_below="@+id/logo_login"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        app:theme="@style/AppTheme"
+        >
+
+        <EditText
+            android:id="@+id/sno_login"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:hint="@string/sno"
+            android:shadowColor="@color/colorPrimary"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/passwordLayout_login"
+        android:textColorHint="@color/colorBlack"
+        android:layout_below="@+id/userLayout_login"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        app:theme="@style/AppTheme"
+        >
+
+        <EditText
+            android:id="@+id/password_login"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/aaa"
+        android:textColorHint="@color/colorBlack"
+        android:layout_below="@+id/login"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        app:theme="@style/AppTheme"
+        >
+
+        <EditText
+            android:id="@+id/vcode"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:hint="验证码"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/logo_login"
+        android:layout_marginTop="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        />
+
+
+</RelativeLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/colorWhite">
+
+
+    <ImageView
+        android:layout_weight="1"
+        app:srcCompat="@drawable/account_black"
+        android:id="@+id/avatar"
+        android:layout_width="0dp"
+        android:layout_height="80dp" />
+
+    <LinearLayout
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="80dp">
+
+
+        <TextView
+            android:gravity="center|left"
+            android:textColor="@color/black"
+            android:id="@+id/title"
+            android:paddingLeft="10dp"
+            android:layout_weight="4"
+            android:textSize="15dp"
+            android:text="title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+        <TextView
+            android:gravity="center|left"
+            android:id="@+id/content"
+            android:paddingLeft="15dp"
+            android:text="small title"
+            android:textSize="13dp"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="80dp">
+        <TextView
+            android:textSize="10dp"
+            android:singleLine="true"
+            android:id="@+id/time"
+            android:gravity="center"
+            android:text="time"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <FrameLayout
+                android:id="@+id/message_reminder"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/message_choose_new_num_reminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/message_reminder_num"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.widget.LinearLayout>

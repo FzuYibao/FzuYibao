@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_library"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/colorPrimary"
+        >
+
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:contentScrim="@color/colorAccent"
+        app:expandedTitleMarginBottom="100dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="第一个固定(pin)"
+             android:textSize="40sp"
+             app:layout_collapseMode="pin" />
+
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:text="不设置,跟随滑动"
+             android:textSize="40sp" />
+
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="bottom"
+             android:text="视察效果(parallax)"
+             android:textSize="40sp"
+             app:layout_collapseMode="parallax" /> -->
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="top"
+            android:id="@+id/toolbar_library"
+            app:layout_collapseMode="pin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="福大图书馆"
+                android:textSize="@dimen/custom_sp_24"
+                android:textColor="@color/colorWhite"
+                />
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+    </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_50"
+        android:layout_below="@id/appbar_library"
+        android:id="@+id/search_library"
+        app:floatingSearch_leftActionMode="showSearch"
+        >
+
+    </com.arlib.floatingsearchview.FloatingSearchView>
+
+    <TextView
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_40"
+        android:layout_below="@id/search_library"
+        android:id="@+id/library_num"
+        android:text="当前馆藏数量"
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"/>
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_below="@id/library_num"
+        android:id="@+id/refresh_library"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="@color/colorWhite"
+        >
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/lv_library"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/library_num"
+            >
+
+        </ListView>
+        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="@dimen/custom_dp_50"
+        android:layout_height="@dimen/custom_dp_50"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/custom_dp_20"
+        android:id="@+id/library_post"
+        android:src="@drawable/add"
+        app:backgroundTint="@color/colorPrimary"
+        />
+
+</RelativeLayout>
