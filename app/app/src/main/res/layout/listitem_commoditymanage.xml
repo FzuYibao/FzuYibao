@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/custom_dp_150"
+    android:minHeight="@dimen/custom_dp_150"
+    >
+
+    <ImageView
+        android:id="@+id/cm_image"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/cm_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/custom_dp_10"
+            android:layout_marginTop="@dimen/custom_dp_10"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/custom_sp_24" />
+
+        <TextView
+            android:id="@+id/cm_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/commodity_name"
+            android:layout_below="@+id/commodity_name"
+            android:textSize="@dimen/custom_sp_16" />
+
+        <TextView
+            android:id="@+id/cm_price"
+            android:layout_width="@dimen/custom_dp_80"
+            android:layout_height="@dimen/custom_dp_30"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/commodity_name"
+            android:layout_marginBottom="@dimen/custom_dp_10"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/custom_sp_20" />
+
+        <Button
+            android:id="@+id/cm_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/custom_dp_20"
+            android:background="@drawable/corner_button"
+            android:text="下   架"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

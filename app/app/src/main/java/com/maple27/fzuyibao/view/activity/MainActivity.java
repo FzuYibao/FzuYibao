@@ -47,25 +47,6 @@ public class MainActivity extends AppCompatActivity {
         StatusBarUtil.setStatusBar(this);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100){
-            if(resultCode == RESULT_OK){
-                List<String> s = Album.parseResult(data);
-                final String imagePath = s.get(0);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        NetworkUtil.PostAvatar(getBaseContext(), imagePath);
-                    }
-                }).start();
-                System.out.println(imagePath + " aaa");
-            }else if(resultCode == RESULT_CANCELED){
-
-            }
-        }
-    }
 
     @Override
     protected void onDestroy() {

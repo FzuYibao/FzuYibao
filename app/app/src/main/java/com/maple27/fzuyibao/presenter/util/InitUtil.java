@@ -124,8 +124,8 @@ public class InitUtil {
         banner.setImageLoader(new GlideImageLoader());
         List<String> list = new ArrayList<>();
         //轮播图测试
-        list.add("https://interface.fty-web.com/public/avatars/0315022121510315700.jpg");
-        list.add("https://interface.fty-web.com/public/avatars/ajmd.jpg");
+        list.add("https://interface.fty-web.com/public/Carousel/Carousel1.jpg");
+        list.add("https://interface.fty-web.com/public/Carousel/Carousel2.jpg");
         banner.setImages(list);
         banner.start();
         //跳转控件

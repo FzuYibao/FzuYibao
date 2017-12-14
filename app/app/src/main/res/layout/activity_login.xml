@@ -70,28 +70,6 @@
             />
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/aaa"
-        android:textColorHint="@color/colorBlack"
-        android:layout_below="@+id/login"
-        android:layout_marginStart="@dimen/custom_dp_10"
-        android:layout_marginEnd="@dimen/custom_dp_10"
-        app:theme="@style/AppTheme"
-        >
-
-        <EditText
-            android:id="@+id/vcode"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textSize="25sp"
-            android:hint="验证码"
-            />
-    </android.support.design.widget.TextInputLayout>
-
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"

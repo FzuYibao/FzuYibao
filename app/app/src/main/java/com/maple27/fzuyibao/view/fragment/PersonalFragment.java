@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +16,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.maple27.fzuyibao.R;
+import com.maple27.fzuyibao.model.bean.GetAvatarBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.presenter.util.GlideImageLoader;
+import com.maple27.fzuyibao.presenter.util.NetworkUtil;
 import com.maple27.fzuyibao.view.activity.InfoActivity;
 import com.maple27.fzuyibao.view.activity.MainActivity;
 import com.maple27.fzuyibao.view.custom_view.CircleImageView;
 import com.yanzhenjie.album.Album;
+
+import java.util.List;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Maple27 on 2017/11/1.
@@ -28,11 +40,29 @@ import com.yanzhenjie.album.Album;
 
 public class PersonalFragment extends Fragment {
 
+    public static String MAINURL = "https://interface.fty-web.com/";
+    private PersonalFragment fragment;
     private Application app;
     private Activity activity;
     private Context context;
     private CircleImageView avatar;
     private TextView info;
+
+    final Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //初始化数据
+            if(msg.what == 45){
+                GetAvatarBean bean = (GetAvatarBean) msg.obj;
+                if(bean.getError_code()==0){
+                    GlideImageLoader imageLoader = new GlideImageLoader();
+                    imageLoader.displayImage(context,MAINURL+bean.getData().getAvatar(),avatar);
+                }else Toast.makeText(activity , "获取数据失败" , Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -43,6 +73,7 @@ public class PersonalFragment extends Fragment {
     }
 
     public void init(View view){
+        fragment = this;
         activity = this.getActivity();
         context = getContext();
         avatar = (CircleImageView) view.findViewById(R.id.avatar);
@@ -52,7 +83,7 @@ public class PersonalFragment extends Fragment {
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Album.startAlbum(activity, 100 , 1);
+                Album.startAlbum(fragment, 100 , 1);
             }
         });
         info.setOnClickListener(new View.OnClickListener() {
@@ -64,4 +95,23 @@ public class PersonalFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100){
+            if(resultCode == RESULT_OK){
+                List<String> s = Album.parseResult(data);
+                final String imagePath = s.get(0);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        NetworkUtil.PostAvatar(context, imagePath, handler);
+                    }
+                }).start();
+                System.out.println(imagePath + " aaa");
+            }else if(resultCode == RESULT_CANCELED){
+
+            }
+        }
+    }
 }

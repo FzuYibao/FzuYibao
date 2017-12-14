@@ -56,7 +56,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/account_black" />
+                    android:src="@drawable/personal4" />
 
                 <TextView
                     android:id="@+id/personal_info"
@@ -81,45 +81,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimaryDark" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/custom_dp_40"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/custom_dp_30"
-                    android:layout_height="@dimen/custom_dp_30"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/lead_pencil" />
-
-                <TextView
-                    android:id="@+id/personal_commodity"
-                    android:layout_width="200dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/custom_dp_20"
-                    android:gravity="center_vertical"
-                    android:text="我的商品"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/custom_sp_20" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="65dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingLeft="20dp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorPrimaryDark" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -158,11 +119,46 @@
                 android:layout_height="1dp"
                 android:background="@color/colorPrimaryDark" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/custom_dp_40"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/custom_dp_30"
+                    android:layout_height="@dimen/custom_dp_30"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/commoditymanage" />
+
+                <TextView
+                    android:id="@+id/personal_commodity"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/custom_dp_20"
+                    android:gravity="center_vertical"
+                    android:text="我的商品"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/custom_sp_20" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="65dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="20dp" />
+
+            </LinearLayout>
+
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimaryDark" />
+
+
 
 
             <LinearLayout
@@ -176,7 +172,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/settings" />
+                    android:src="@drawable/logoff" />
 
                 <TextView
                     android:id="@+id/personal_setting"
@@ -184,7 +180,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/custom_dp_20"
                     android:gravity="center_vertical"
-                    android:text="设置"
+                    android:text="注销"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_sp_20" />
 

@@ -59,7 +59,7 @@ public class CommodityFragment extends Fragment {
                 }else Toast.makeText(getActivity().getBaseContext() , "获取数据失败" , Toast.LENGTH_SHORT).show();
             }
             //刷新数据
-            if(msg.what == 279){
+            if(msg.what == 281){
                 bean = (CommodityBean) msg.obj;
                 adapter.setBean(bean);
                 adapter.notifyDataSetChanged();

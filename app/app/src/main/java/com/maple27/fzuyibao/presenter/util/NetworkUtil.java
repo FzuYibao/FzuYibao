@@ -2,11 +2,10 @@ package com.maple27.fzuyibao.presenter.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -21,7 +20,6 @@ import com.maple27.fzuyibao.model.bean.UserInfoBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -34,8 +32,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.maple27.fzuyibao.presenter.adapter.LibraryAdapter;
+import com.maple27.fzuyibao.view.activity.LoginActivity;
 
 /**
  * Created by Maple27 on 2017/11/13.
@@ -49,19 +52,21 @@ public class NetworkUtil {
     public static final String LOGIN_CHK_XS = "http://59.77.226.35/loginchk_xs.aspx";
     // parameter id num       从logincheck.asp获取
     //返回 id
-    public static String MAINURL = "https://interface.fty-web.com/";
-    public static String LOGINURL = "login/login";
-    public static String POSTAVATARURL = "user/update_avatar";
-    public static String POSTURL = "Goods/add_goods";
-    public static String POSTNEEDURL = "Wants/insert_wants";
-    public static String DONATEURL = "Books/donate_books";
-    public static String RENTURL = "Books/rent_books";
-    public static String GETCOMMODITYURL = "Goods/show_goods_by_type";
-    public static String GETLIBRARYURL = "Books/show_books_by_type";
-    public static String GETDETAILSURL = "Goods/show_all_goods";
-    public static String GETSEEKURL = "Wants/show_all_wants";
-    public static String UPDATEUSERMESSAGEURL = "user/update_user_info";
+    public static final String MAINURL = "https://interface.fty-web.com/";
+    public static final String LOGINURL = "login/login";
+    public static final String VALID_CODE="http://59.77.226.32/captcha.asp";
+    public static final String POSTAVATARURL = "user/update_avatar";
+    public static final String POSTURL = "Goods/add_goods";
+    public static final String POSTNEEDURL = "Wants/insert_wants";
+    public static final String DONATEURL = "Books/donate_books";
+    public static final String RENTURL = "Books/rent_books";
+    public static final String GETCOMMODITYURL = "Goods/show_goods_by_type";
+    public static final String GETLIBRARYURL = "Books/show_books_by_type";
+    public static final String GETDETAILSURL = "Goods/show_all_goods";
+    public static final String GETSEEKURL = "Wants/show_all_wants";
+    public static final String UPDATEUSERMESSAGEURL = "user/update_user_info";
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    private static final long TIME_OUT=3*1000l;
 
     public static String getCookieHtml(String targetUrl){
         String html=null;
@@ -83,59 +88,135 @@ public class NetworkUtil {
         return html;
     }
 
-    public static String VCode(Handler handler){
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://59.77.226.32/captcha.asp")
-                .build();
+    public static Bitmap getVerifyCode() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().addNetworkInterceptor(new LoginInterceptor()).build();
+        Request request=new Request.Builder().url(VALID_CODE).build();
         try {
-            Response response = okHttpClient.newCall(request).execute();
-            //得到从网上获取资源，转换成我们想要的类型
-            byte[] Picture_bt = response.body().bytes();
-            //通过handler更新UI
-            Message message = handler.obtainMessage();
-            message.obj = Picture_bt;
-            message.what = 1;
-            handler.sendMessage(message);
-            return "";
+            ResponseBody responseBody = okHttpClient.newCall(request).execute().body();
+            InputStream in=responseBody.byteStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(in);
+            return bitmap;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
-    public static String Login1(String sno, String password,String code) throws Exception{
+    public static int autoLogin(Context context, String sno, String password){
+        int result=loginByVerifyCode(context, sno, password);
+        if (result == ResultCode.LOGIN_VERIFY_ERROR || result == ResultCode.LOGIN_ERROR) {
+            //result = loginByJwt(context,user.getFzuAccount(), user.getFzuPasssword());
+        }
+//        int result = loginByJwt(user.getFzuAccount(), user.getFzuPasssword());
+        if (result==ResultCode.LOGIN_PWD_ERROR){
+
+        }
+        return result;
+    }
+
+    public static int loginByVerifyCode(Context context, String sno, String password) {
+        int res= ResultCode.LOGIN_ERROR;
+        long startTime = System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
+        while (res != ResultCode.LOGIN_SUCCESS && endTime-startTime<=TIME_OUT&&res!=ResultCode.LOGIN_PWD_ERROR) {
+            try {
+                Bitmap bitmap = getVerifyCode();
+                if (bitmap != null) {
+                    VerifyCodeDto verifyCodeDto = null;
+                    verifyCodeDto = postVerifyCode(Base64Util.bitmapToBase64(bitmap));
+                    Log.d("vvv",verifyCodeDto.getResult());
+                    if (verifyCodeDto != null) {
+                        try {
+                            res = LoginJWC(sno, password, verifyCodeDto.getResult());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            endTime=System.currentTimeMillis();
+        }
+        if (res == ResultCode.LOGIN_SUCCESS) {
+            return res;
+        }
+        //密码错误，退回登录界面
+        if (res == ResultCode.LOGIN_PWD_ERROR&&!(context instanceof LoginActivity)) {
+            Log.i(TAG, "loginByVerifyCode: 密码错误，尝试跳到登录页面");
+
+        }
+        return res;
+    }
+
+    public static VerifyCodeDto postVerifyCode(String base64) {
+        OkHttpClient client = new OkHttpClient();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://soft.hs97.cn:8088/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        VerifyService service = retrofit.create(VerifyService.class);
+        VerifyCodeRequest verifyCodeRequest = new VerifyCodeRequest();
+        verifyCodeRequest.setBase64(base64);
+        verifyCodeRequest.setTrim("\n");
+        verifyCodeRequest.setWhitelist("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        Call<VerifyCodeDto> call = service.getVerifyCode(verifyCodeRequest);
+        try {
+            VerifyCodeDto verifyCodeDto = call.execute().body();
+            return verifyCodeDto;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int LoginJWC(String sno, String password, String code) throws Exception{
         Log.i(TAG, "user:" + sno+" pass:"+password);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().addNetworkInterceptor(new LoginInterceptor()).build();
-        FormBody formBody=new FormBody.Builder().add("muser",sno).add("passwd",password).add("Verifycode",code).build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new LoginInterceptor()).build();
+        FormBody formBody=new FormBody.Builder()
+                .add("muser",sno)
+                .add("passwd",password)
+                .add("Verifycode",code)
+                .build();
         Request request=new Request.Builder()
                 .url("http://59.77.226.32/logincheck.asp")
                 .method("Post",null)
                 .post(formBody)
+                .addHeader("Cookie",FzuCookie.get().getCookie()+"")
                 .addHeader("Referer","http://jwch.fzu.edu.cn/")
                 .addHeader("Connection","keep-alive")
                 .build();
-
         Response response=okHttpClient.newCall(request).execute();
         if(!response.message().equals("OK")){
             Log.i(TAG,"网络出错");
-            return "网络出错";
+            return ResultCode.NET_ERROR;
         }
         String result = new String(response.body().bytes());
+
+        String gb2312Result=new String(result.getBytes("GBK"),"GBK");
+        String utf8Result=new String(result.getBytes(),"utf-8");
+        Log.i(TAG, "result:"+gb2312Result);
         if (result.contains("charset=gb2312")){
-            result=new String(result.getBytes(),"gb2312");
+
         }
-        Log.i(TAG, "Login: "+result);
-        Log.i(TAG, result);
-        if(result.contains("密码错误，请重新登录，或与学院教学办联系！")||result.contains("用户名错误，请确认是否输入错误，用户名前请不要加字母！！")){
+        Log.i(TAG, "Login: length:"+result.length());
+        String alert=result.replaceAll(".*alert\\((.*)\\).*","$1");
+        Log.i(TAG, "Login: regex:"+alert+" length:"+alert.length());
+        if (alert.length() == 50) {
+            Log.i(TAG, "Login: 验证码错误");
+            return ResultCode.LOGIN_VERIFY_ERROR;
+        }
+        if(alert.length() == 70){
             Log.i(TAG,"密码错误");
-            return "密码错误";
+            return ResultCode.LOGIN_PWD_ERROR;
         }
         if (result.contains("left.aspx")){
             Log.i(TAG, "登录成功");
-            return "登录成功";
+            return ResultCode.LOGIN_SUCCESS;
         }
-        return "登录失败，请检查用户名和密码是否正确!";
+        return ResultCode.LOGIN_ERROR;
     }
 
     public static LoginBean Login(String sno, String name, String grade, String major, String phone){
@@ -167,7 +248,7 @@ public class NetworkUtil {
         }
     }
 
-    public static String PostAvatar(Context context, String imagePath){
+    public static String PostAvatar(Context context, String imagePath, Handler handler){
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -188,6 +269,7 @@ public class NetworkUtil {
             Gson gson = new Gson();
             Type type = new TypeToken<GetAvatarBean>(){}.getType();
             GetAvatarBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(45, bean).sendToTarget();
             return bean.getData().getAvatar().getAvatar_path();
         } catch (IOException e) {
             e.printStackTrace();
@@ -226,7 +308,7 @@ public class NetworkUtil {
             Gson gson = new Gson();
             Type type = new TypeToken<CommodityBean>(){}.getType();
             CommodityBean bean = gson.fromJson(result, type);
-            //handler.obtainMessage(279, bean).sendToTarget();
+            handler.obtainMessage(281, bean).sendToTarget();
             int error_code = bean.getError_code();
             if(error_code==0){
                 Looper.prepare();

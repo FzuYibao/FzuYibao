@@ -29,7 +29,6 @@ public class InfoActivity extends AppCompatActivity {
     private TextView grade;
     private TextView phone;
     private CircleImageView avatar;
-    private Button logoff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class InfoActivity extends AppCompatActivity {
             actionBar.setTitle("");
             //here 加返回键图片
         }
-        logoff = (Button) findViewById(R.id.logoff);
         avatar = (CircleImageView) findViewById(R.id.info_avatar) ;
         GlideImageLoader imageLoader = new GlideImageLoader();
         imageLoader.displayImage(this, UserEntity.getAvatar_path(), avatar);
@@ -84,15 +82,6 @@ public class InfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(InfoActivity.this,AlterPhoneActivity.class);
                 startActivity(intent);
-            }
-        });
-        logoff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(InfoActivity.this, LoginActivity.class);
-                startActivity(intent);
-                ActivityController.removeActivity(activity);
-                activity.finish();
             }
         });
         StatusBarUtil.setStatusBar(this);

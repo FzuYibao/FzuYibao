@@ -23,7 +23,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/custom_dp_20"
+        android:layout_marginEnd="@dimen/custom_dp_20"
         android:background="@color/albumColorPrimary"
         />
 
@@ -56,7 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/albumColorPrimary"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/custom_dp_20"
+        android:layout_marginEnd="@dimen/custom_dp_20"
         />
 
     <LinearLayout
@@ -66,14 +68,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="98dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:text="姓名"
-            android:maxLines="1"
 
             android:gravity="center_vertical"
-            android:textSize="20sp"
-            android:layout_width="100dp"
-            android:layout_height="match_parent" />
+            android:maxLines="1"
+            android:text="姓名"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/info_name"
@@ -88,7 +90,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/albumColorPrimary"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/custom_dp_20"
+        android:layout_marginEnd="@dimen/custom_dp_20"
         />
 
 
@@ -119,7 +122,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/custom_dp_20"
+        android:layout_marginEnd="@dimen/custom_dp_20"
         android:background="@color/albumColorPrimary"
         />
 
@@ -153,7 +157,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/custom_dp_20"
+        android:layout_marginEnd="@dimen/custom_dp_20"
         android:background="@color/albumColorPrimary"
         />
 
@@ -185,7 +190,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/custom_dp_20"
+        android:layout_marginEnd="@dimen/custom_dp_20"
         android:background="@color/albumColorPrimary"
         />
 
@@ -216,30 +222,10 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/custom_dp_20"
+        android:layout_marginEnd="@dimen/custom_dp_20"
         android:background="@color/albumColorPrimary"
         />
-
-
-
-
-    <LinearLayout
-        android:background="@color/colorGray"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.2">
-        <Button
-            android:layout_marginTop="@dimen/custom_dp_20"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/custom_dp_40"
-            android:text="注         销"
-            android:textColor="@color/colorRed"
-            android:background="@color/colorWhite"
-            android:textSize="26sp"
-            android:id="@+id/logoff"
-            />
-
-    </LinearLayout>
 
 </LinearLayout>
 
