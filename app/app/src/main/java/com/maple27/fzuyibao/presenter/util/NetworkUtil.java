@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -64,6 +65,8 @@ public class NetworkUtil {
     public static final String GETLIBRARYURL = "Books/show_books_by_type";
     public static final String GETDETAILSURL = "Goods/show_all_goods";
     public static final String GETSEEKURL = "Wants/show_all_wants";
+    public static final String GETMANAGEURL = "Goods/show_goods_by_sno";
+    public static final String OFFCOMMODITYURL = "Goods/delete_all_goods";
     public static final String UPDATEUSERMESSAGEURL = "user/update_user_info";
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
     private static final long TIME_OUT=3*1000l;
@@ -219,6 +222,7 @@ public class NetworkUtil {
         return ResultCode.LOGIN_ERROR;
     }
 
+    @Nullable
     public static LoginBean Login(String sno, String name, String grade, String major, String phone){
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -411,14 +415,14 @@ public class NetworkUtil {
         }
     }
 
-    public static void GetCommodityInfo(String category, Handler handler){
+    public static void GetCommodityInfo(int page, String category, Handler handler){
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
         Response response;
         RequestBody requestBody = new FormBody.Builder()
                 .add("jwt" , UserEntity.getJwt())
                 .add("type" , category)
-                .add("page" , "0")
+                .add("page" , page+"")
                 .build();
         Request request = new Request.Builder()
                 .url(MAINURL+GETCOMMODITYURL)
@@ -431,7 +435,12 @@ public class NetworkUtil {
             Gson gson = new Gson();
             Type type = new TypeToken<CommodityBean>(){}.getType();
             CommodityBean bean = gson.fromJson(result, type);
-            handler.obtainMessage(27, bean).sendToTarget();
+            if(page==0){
+                handler.obtainMessage(27, bean).sendToTarget();
+            }else{
+                handler.obtainMessage(120, bean).sendToTarget();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -508,6 +517,83 @@ public class NetworkUtil {
             Type type = new TypeToken<SeekBean>(){}.getType();
             SeekBean bean = gson.fromJson(result, type);
             handler.obtainMessage(24, bean).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void GetCollectInfo(Handler handler){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("type" , "1")
+                .add("page" , "0")
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+GETMANAGEURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("getManage", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<CommodityBean>(){}.getType();
+            CommodityBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(26, bean).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void GetCommodityManageInfo(Handler handler){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("type" , "0")
+                .add("page" , "0")
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+GETMANAGEURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("getManage", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<CommodityBean>(){}.getType();
+            CommodityBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(36, bean).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void OffCommodity(Handler handler, String id){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("gid" , id)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+OFFCOMMODITYURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("offCommodity", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<CommodityBean>(){}.getType();
+            CommodityBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(46, bean).sendToTarget();
         } catch (IOException e) {
             e.printStackTrace();
         }

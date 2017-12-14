@@ -15,6 +15,16 @@ public class CommodityBean {
      */
 
     private int error_code;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     private DataBean data;
 
     public int getError_code() {

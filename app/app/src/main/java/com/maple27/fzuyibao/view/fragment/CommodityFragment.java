@@ -29,6 +29,7 @@ import com.scwang.smartrefresh.header.WaveSwipeHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 
 /**
  * Created by Maple27 on 2017/11/18.
@@ -45,22 +46,24 @@ public class CommodityFragment extends Fragment {
     private View view;
     private SmartRefreshLayout refresh;
     private FloatingActionButton post;
+    private int page = 0;
 
     final Handler handler = new Handler(){
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            //初始化数据
+            //初始化数据和刷新
             if(msg.what == 27){
                 bean = (CommodityBean) msg.obj;
                 if(bean.getError_code()==0){
                     init(view);
                 }else Toast.makeText(getActivity().getBaseContext() , "获取数据失败" , Toast.LENGTH_SHORT).show();
             }
-            //刷新数据
-            if(msg.what == 281){
-                bean = (CommodityBean) msg.obj;
+            //加载更多
+            if(msg.what == 120){
+                CommodityBean bean2 = (CommodityBean) msg.obj;
+                bean.getData().setGoods(bean2.getData().getGoods());
                 adapter.setBean(bean);
                 adapter.notifyDataSetChanged();
             }
@@ -73,7 +76,7 @@ public class CommodityFragment extends Fragment {
             @Override
             public void run() {
                 category = getArguments().getString("category");
-                NetworkUtil.GetCommodityInfo(category,handler);
+                NetworkUtil.GetCommodityInfo(0,category,handler);
             }
         }).start();
     }
@@ -100,7 +103,30 @@ public class CommodityFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        NetworkUtil.GetCommodityInfo(category,handler);
+                        NetworkUtil.GetCommodityInfo(page,category,handler);
+                    }
+                }).start();
+            }
+        });
+        refresh.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        NetworkUtil.GetCommodityInfo(page,category,handler);
+                    }
+                }).start();
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        NetworkUtil.GetCommodityInfo(0,category,handler);
                     }
                 }).start();
             }

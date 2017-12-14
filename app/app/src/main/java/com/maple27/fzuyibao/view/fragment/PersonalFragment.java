@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,10 @@ import com.maple27.fzuyibao.model.bean.GetAvatarBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.presenter.util.GlideImageLoader;
 import com.maple27.fzuyibao.presenter.util.NetworkUtil;
+import com.maple27.fzuyibao.view.activity.CollectActivity;
+import com.maple27.fzuyibao.view.activity.CommodityManageActivity;
 import com.maple27.fzuyibao.view.activity.InfoActivity;
+import com.maple27.fzuyibao.view.activity.LoginActivity;
 import com.maple27.fzuyibao.view.activity.MainActivity;
 import com.maple27.fzuyibao.view.custom_view.CircleImageView;
 import com.yanzhenjie.album.Album;
@@ -47,6 +51,9 @@ public class PersonalFragment extends Fragment {
     private Context context;
     private CircleImageView avatar;
     private TextView info;
+    private TextView collect;
+    private TextView commodity;
+    private TextView logoff;
 
     final Handler handler = new Handler(){
 
@@ -58,7 +65,9 @@ public class PersonalFragment extends Fragment {
                 GetAvatarBean bean = (GetAvatarBean) msg.obj;
                 if(bean.getError_code()==0){
                     GlideImageLoader imageLoader = new GlideImageLoader();
-                    imageLoader.displayImage(context,MAINURL+bean.getData().getAvatar(),avatar);
+                    imageLoader.displayImage(context,MAINURL+bean.getData().getAvatar().getAvatar_path(),avatar);
+                    Log.d("avatar",MAINURL+bean.getData().getAvatar().getAvatar_path());
+                    Toast.makeText(context,"修改头像成功",Toast.LENGTH_SHORT);
                 }else Toast.makeText(activity , "获取数据失败" , Toast.LENGTH_SHORT).show();
             }
         }
@@ -78,6 +87,9 @@ public class PersonalFragment extends Fragment {
         context = getContext();
         avatar = (CircleImageView) view.findViewById(R.id.avatar);
         info = (TextView) view.findViewById(R.id.personal_info);
+        collect = (TextView) view.findViewById(R.id.personal_collect);
+        commodity = (TextView) view.findViewById(R.id.personal_commodity);
+        logoff = (TextView) view.findViewById(R.id.personal_logoff);
         GlideImageLoader imageLoader = new GlideImageLoader();
         imageLoader.displayImage(context, UserEntity.getAvatar_path(), avatar);
         avatar.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +103,28 @@ public class PersonalFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(activity, InfoActivity.class);
                 startActivity(intent);
+            }
+        });
+        collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, CollectActivity.class);
+                startActivity(intent);
+            }
+        });
+        commodity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, CommodityManageActivity.class);
+                startActivity(intent);
+            }
+        });
+        logoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, LoginActivity.class);
+                startActivity(intent);
+                activity.finish();
             }
         });
     }

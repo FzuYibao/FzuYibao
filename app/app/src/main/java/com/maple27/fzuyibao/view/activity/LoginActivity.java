@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 Log.i("eee", "onEditorAction: Id:"+id);
                 if ( id == EditorInfo.IME_NULL||id==6) {
-                            attemptLogin();
+                            //attemptLogin();
                     return true;
                 }
                 return false;

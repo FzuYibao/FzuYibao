@@ -164,6 +164,7 @@
         <activity android:name=".view.activity.DonateActivity"></activity>
         <activity android:name=".view.activity.PostNeedActivity"></activity>
         <activity android:name=".view.activity.CommodityManageActivity"></activity>
+        <activity android:name=".view.activity.CollectActivity"></activity>
         <activity
             android:name="com.yanzhenjie.album.AlbumActivity"
             android:label="图库"

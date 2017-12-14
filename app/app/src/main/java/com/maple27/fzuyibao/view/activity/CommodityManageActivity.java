@@ -2,20 +2,29 @@ package com.maple27.fzuyibao.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maple27.fzuyibao.R;
+import com.maple27.fzuyibao.model.bean.CommodityBean;
+import com.maple27.fzuyibao.model.bean.SeekBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
+import com.maple27.fzuyibao.presenter.adapter.CommodityManageAdapter;
 import com.maple27.fzuyibao.presenter.util.ActivityController;
 import com.maple27.fzuyibao.presenter.util.GlideImageLoader;
+import com.maple27.fzuyibao.presenter.util.NetworkUtil;
 import com.maple27.fzuyibao.presenter.util.StatusBarUtil;
 import com.maple27.fzuyibao.view.custom_view.CircleImageView;
 
@@ -27,18 +36,54 @@ public class CommodityManageActivity extends AppCompatActivity {
 
     private AppCompatActivity activity;
     private ListView listView;
+    private CommodityManageAdapter adapter;
+    private CommodityBean bean;
+
+    final Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //初始化数据
+            if(msg.what == 36){
+                bean = (CommodityBean) msg.obj;
+                if(bean.getError_code()==0){
+                    init();
+                }else Toast.makeText(activity , "获取数据失败" , Toast.LENGTH_SHORT).show();
+            }else if(msg.what == 46){
+                bean = (CommodityBean) msg.obj;
+                if(bean.getError_code()==0){
+                    adapter.setBean(bean);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(activity , "商品下架成功" , Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(activity , "获取数据失败" , Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    public CommodityManageActivity(){
+        super();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetworkUtil.GetCommodityManageInfo(handler);
+            }
+        }).start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityController.addActivity(this);
         setContentView(R.layout.activity_commoditymanage);
-        init();
     }
 
     public void init(){
         activity = this;
         listView = (ListView) findViewById(R.id.lv_cm);
+        adapter = new CommodityManageAdapter(activity, bean, handler);
+        listView.setAdapter(adapter);
+        setListViewHeightBasedOnChildren(listView);
         Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.cm_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -47,6 +92,7 @@ public class CommodityManageActivity extends AppCompatActivity {
             actionBar.setSubtitle("");
             actionBar.setTitle("");
         }
+
         StatusBarUtil.setStatusBar(this);
     }
 
@@ -65,6 +111,43 @@ public class CommodityManageActivity extends AppCompatActivity {
             default:
         }
         return true;
+    }
+
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+
+        // 获取ListView对应的Adapter
+
+        ListAdapter listAdapter = listView.getAdapter();
+
+        if (listAdapter == null) {
+
+            return;
+
+        }
+
+        int totalHeight = 0;
+
+        for (int i = 0; i < listAdapter.getCount(); i++) { // listAdapter.getCount()返回数据项的数目
+
+            View listItem = listAdapter.getView(i, null, listView);
+
+            listItem.measure(0, 0); // 计算子项View 的宽高
+
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+
+        // params.height最后得到整个ListView完整显示需要的高度
+
+        listView.setLayoutParams(params);
+
     }
 
 }
