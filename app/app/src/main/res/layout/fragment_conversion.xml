@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.FrameLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!--存放会话的listview，默认不显示-->
+    <ListView
+        android:visibility="gone"
+        android:id="@+id/lv_choose_conversion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <!--当没有conversion时显示-->
+    <LinearLayout
+        android:id="@+id/ll__no_conversion_background"
+        android:visibility="visible"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="not conversion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
+</android.widget.FrameLayout>

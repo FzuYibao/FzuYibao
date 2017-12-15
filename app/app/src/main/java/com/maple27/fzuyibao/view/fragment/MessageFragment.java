@@ -8,18 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.maple27.fzuyibao.R;
-import com.maple27.fzuyibao.model.entity.MessageChatViewEntity;
-import com.maple27.fzuyibao.model.entity.MessageChooseViewEntity;
+import com.maple27.fzuyibao.model.entity.MessageConversionEntity;
 import com.maple27.fzuyibao.model.entity.MessageReciverEntity;
-import com.maple27.fzuyibao.presenter.adapter.MessageChooseAdapter;
-import com.maple27.fzuyibao.view.activity.MessageChatActivity;
-import com.scwang.smartrefresh.header.WaveSwipeHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.maple27.fzuyibao.model.entity.UserEntity;
+import com.maple27.fzuyibao.presenter.adapter.MessageConversionAdapter;
+import com.maple27.fzuyibao.presenter.util.MessageUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +24,10 @@ import java.util.Date;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.CustomContent;
+import cn.jpush.im.android.api.content.ImageContent;
 import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.content.VoiceContent;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
@@ -39,123 +39,199 @@ import cn.jpush.im.android.api.model.UserInfo;
 
 public class MessageFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    SmartRefreshLayout mRefresh;
+    //view
     ListView mListView;
-    MessageChooseAdapter mAdapter;
-    List<MessageChooseViewEntity> mData = null;
+    LinearLayout mLinearLayout;
+    MessageConversionAdapter mAdapter;
 
-    MessageReciverEntity mMe = null;
+    //flag
+    boolean isShowListview = false;
 
-    @Override
-    public void onDestroyView() {
-        JMessageClient.unRegisterEventReceiver(this);
-        super.onDestroyView();
-    }
+    //data
+    MessageReciverEntity mSender;
+    List<MessageConversionEntity> mData;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //开启api监听收信息
+        Log.i("MessageFragment", "onCreateView->init JMessageClient");
         JMessageClient.registerEventReceiver(this);
-
-        View view = inflater.inflate(R.layout.fragment_message , null);
+        View view = inflater.inflate(R.layout.fragment_conversion, null);
         initData();
-        initView(view, inflater);
+        initView(view);
         return view;
     }
 
+    //for init view
+    private void initView(View view) {
+        Log.i("MessageFragment", "initView->init view");
+        mListView = (ListView) view.findViewById(R.id.lv_choose_conversion);
+        mLinearLayout = (LinearLayout) view.findViewById(R.id.ll__no_conversion_background);
+
+        Log.i("MessageFragment", "initView->isShowListview：" + isShowListview);
+        if(isShowListview){
+            mListView.setVisibility(View.VISIBLE);
+            mLinearLayout.setVisibility(View.INVISIBLE);
+
+            //set adapter
+            mAdapter = new MessageConversionAdapter(getContext(), mData);
+            mListView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+
+            mListView.setOnItemClickListener(this);
+        }
+
+    }
+
+    //for init data
     private void initData() {
-        //生成和我相关的数据
-        UserInfo myUserInfo = JMessageClient.getMyInfo();
-        mMe = new MessageReciverEntity();
-        mMe.setAccount(myUserInfo.getUserName());
-        mMe.setNickname(myUserInfo.getNickname());
+        Log.i("MessageFragment", "initData->init data");
+        //获得me的信息
+        UserInfo userInfo = JMessageClient.getMyInfo();
+        mSender = new MessageReciverEntity();
+        mSender.setAccount(userInfo.getUserName());
+        mSender.setNickname(userInfo.getNickname());
+        mSender.setAvatar(userInfo.getAddress());
 
-        //生成相应的列表数据
-        mData = new ArrayList<MessageChooseViewEntity>();
-        List<Conversation> list = JMessageClient.getConversationList();
-        for(int i=0;i<list.size();i++){
-            Conversation c = list.get(i);
-            //userinfo
-            UserInfo who = (UserInfo) c.getTargetInfo();
-            MessageReciverEntity reciver =  new MessageReciverEntity();
-            reciver.setNickname(who.getNickname());
-            reciver.setAccount(who.getUserName());
+        Log.i("MessageFragment", "initData->userinfo: username:" + userInfo.getUserName() + " nickname:" + userInfo.getNickname()
+                + "  avatar:" + userInfo.getAddress());
 
-            //MessageChooseViewEntity
-            MessageChooseViewEntity m = new MessageChooseViewEntity();
+        //读取本地conversion列表，确定isShowListview
+        mData = new ArrayList<MessageConversionEntity>();
+        List<Conversation> temp_list = JMessageClient.getConversationList();
+        if(temp_list.size() > 0){
+            isShowListview = true;
+        }
+        for(int i=0;i<temp_list.size();i++){
+            Conversation temp_conversation = temp_list.get(i);
+            UserInfo reciverUserInfo = (UserInfo) temp_conversation.getTargetInfo();
+
+            //MessageReciverEntity
+            MessageReciverEntity reciver = new MessageReciverEntity();
+            reciver.setAvatar(reciverUserInfo.getAddress());
+            reciver.setAccount(reciverUserInfo.getUserName());
+            reciver.setNickname(reciverUserInfo.getNickname());
+
+            //MessageConversionEntity
+            MessageConversionEntity m = new MessageConversionEntity();
             m.setReciver(reciver);
-            m.setTitle(reciver.getNickname());
-            TextContent textContent = (TextContent) c.getLatestMessage().getContent();
-            m.setContent("" + textContent.getText());
+            m.setAvatar(reciverUserInfo.getAddress());
 
-            //time
-            long time = c.getLatestMessage().getCreateTime();
+            //message content
+            TextContent temp_textcontent = (TextContent) temp_conversation.getLatestMessage().getContent();
+            m.setContent(temp_textcontent.getText());
+
+            m.setTitle(reciverUserInfo.getNickname());
+
+            long time = temp_conversation.getLatestMessage().getCreateTime();
             SimpleDateFormat format=new SimpleDateFormat("hh:mm:ss");
             Date d1=new Date(time);
             String t1=format.format(d1);
             m.setTime(t1);
 
             mData.add(m);
+            Log.i("MessageFragment", "initData->conversion: reciver:" + reciverUserInfo.getUserName());
         }
 
-    }
-
-    private void initView(View view, LayoutInflater inflater) {
-        WaveSwipeHeader waveSwipeHeader = new WaveSwipeHeader(getContext());
-        mRefresh = (SmartRefreshLayout) view.findViewById(R.id.refresh_message);
-        mRefresh.setRefreshHeader(waveSwipeHeader);
-        mRefresh.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000);
-                //刷新请求
-                initData();
-                mAdapter.notifyDataSetChanged();
-
-            }
-        });
-
-        mListView = (ListView) view.findViewById(R.id.lv_choose_message);
-        mAdapter = new MessageChooseAdapter(getContext(), mData);
-        mListView.setAdapter(mAdapter);
-
-        mListView.setOnItemClickListener(this);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if(adapterView.getId() == R.id.lv_choose_message){
-            MessageChooseViewEntity data = mData.get(i);
-            MessageReciverEntity sender = mMe;
-            MessageReciverEntity reciver = data.getReciver();
-            MessageChatActivity.startMessageChatActivity(getActivity(), sender, reciver);
-        }
+    public void onDestroyView() {
+        Log.i("MessageFragment", "onDestroyView->finish JMessageClient");
+        JMessageClient.unRegisterEventReceiver(this);
+        super.onDestroyView();
     }
 
     //接受信息
     public void onEvent(MessageEvent event){
         Message msg = event.getMessage();
+        UserInfo userInfo = msg.getFromUser();
+        int index = findUser(msg);
+        Log.i("MessageFragment", "onEvent->" + "from:" + userInfo.getUserName() + "  messageType:" + msg.getContentType());
+        Log.i("MessageFragment", "onEvent->" + "user index:" + index);
         switch (msg.getContentType()){
             case text:
-                String who = msg.getFromUser().getNickname();
-                for(int i=0;i<mData.size();i++){
-                    MessageChooseViewEntity m = mData.get(i);
-                    if(who.equals(m.getTitle())){
-                        //time
-                        long time = msg.getCreateTime();
-                        SimpleDateFormat format=new SimpleDateFormat("hh:mm:ss");
-                        Date d1=new Date(time);
-                        String t1=format.format(d1);
-                        m.setTime(t1);
-                        //content
-                        TextContent textContent = (TextContent) msg.getContent();
-                        m.setContent(textContent.getText());
-                        mAdapter.notifyDataSetChanged();
-                        break;
-                    }
+                //处理文字消息
+                if(index == -1){
+                    //之前没有这个对话
+                    Log.i("MessageFragment", "create a new text conversation");
+                    MessageReciverEntity reciver = new MessageReciverEntity();
+                    reciver.setAvatar(userInfo.getAddress());
+                    reciver.setAccount(userInfo.getUserName());
+                    reciver.setNickname(userInfo.getNickname());
+
+                    MessageConversionEntity m = new MessageConversionEntity();
+                    m.setReciver(reciver);
+                    m.setAvatar(userInfo.getAddress());
+
+                    //message content
+                    TextContent temp_textcontent = (TextContent) msg.getContent();
+                    m.setContent(temp_textcontent.getText());
+
+                    m.setTitle(userInfo.getNickname());
+
+                    long time = msg.getCreateTime();
+                    SimpleDateFormat format=new SimpleDateFormat("hh:mm:ss");
+                    Date d1=new Date(time);
+                    String t1=format.format(d1);
+                    m.setTime(t1);
+
+                    mData.add(m);
+                    mListView.setAdapter( new MessageConversionAdapter(getContext(), mData));
+                }else{
+                    Log.i("MessageFragment", "update a new text conversation");
+                    //更新对话
+                    MessageConversionEntity m = mData.get(index);
+                    m.setTitle(userInfo.getNickname());
+                    //message content
+                    TextContent temp_textcontent = (TextContent) msg.getContent();
+                    m.setContent(temp_textcontent.getText());
+
+                    long time = msg.getCreateTime();
+                    SimpleDateFormat format=new SimpleDateFormat("hh:mm:ss");
+                    Date d1=new Date(time);
+                    String t1=format.format(d1);
+                    m.setTime(t1);
+
+                    mListView.setAdapter( new MessageConversionAdapter(getContext(), mData));
                 }
                 break;
+            case image:
+                //处理图片消息
+                ImageContent imageContent = (ImageContent) msg.getContent();
+                imageContent.getLocalPath();//图片本地地址
+                imageContent.getLocalThumbnailPath();//图片对应缩略图的本地地址
+                break;
+            case voice:
+                //处理语音消息
+                VoiceContent voiceContent = (VoiceContent) msg.getContent();
+                voiceContent.getLocalPath();//语音文件本地地址
+                voiceContent.getDuration();//语音文件时长
+                break;
+            case custom:
+                break;
+        }
+    }
+
+    private int findUser(Message msg) {
+        String who = msg.getFromUser().getUserName();
+        for(int i=0;i<mData.size();i++){
+            MessageConversionEntity m = mData.get(i);
+            MessageReciverEntity reciverEntity = m.getReciver();
+            if(reciverEntity.getAccount().equals(who)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if(adapterView == mListView){
+            MessageConversionEntity m = mData.get(i);
+            Log.i("MessageFragment", "onItemClick->click：" + m.getReciver().getAccount());
+            MessageUtil.startMessageChatActivity(getActivity(), mSender, m.getReciver());
         }
     }
 }

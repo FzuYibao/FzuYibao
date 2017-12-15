@@ -4,8 +4,9 @@ package com.maple27.fzuyibao.model.entity;
  * Created by IMTB on 2017/11/16.
  */
 
-public class MessageChooseViewEntity {
+public class MessageConversionEntity {
     //for view
+    String avatar;
     String title;
     String content;
     String time;
@@ -13,6 +14,14 @@ public class MessageChooseViewEntity {
 
     //for data
     MessageReciverEntity reciver;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getTitle() {
         return title;

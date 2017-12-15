@@ -146,12 +146,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
-        <activity android:name=".view.activity.MessageChatActivity">
-
-        </activity>
 
         <activity android:name=".view.activity.StartMessageEntry">
         </activity>
+        <activity android:name=".view.activity.MessageListActivity"></activity>
+        <activity android:name=".view.activity.VideoActivity"></activity>
         <activity android:name=".view.activity.AlterNicknameActivity"></activity>
         <activity android:name=".view.activity.AlterPhoneActivity"></activity>
         <activity android:name=".view.activity.InfoActivity"></activity>

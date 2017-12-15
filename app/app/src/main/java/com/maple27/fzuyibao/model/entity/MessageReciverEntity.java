@@ -8,8 +8,17 @@ import java.io.Serializable;
 
 public class MessageReciverEntity implements Serializable {
 
+    String avatar;
     String account;
     String nickname;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getAccount() {
         return account;

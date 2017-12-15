@@ -7,11 +7,9 @@ import android.widget.Toast;
 
 import com.maple27.fzuyibao.model.entity.MessageReciverEntity;
 import com.maple27.fzuyibao.model.entity.UserEntity;
-import com.maple27.fzuyibao.view.activity.LoginActivity;
-import com.maple27.fzuyibao.view.activity.MessageChatActivity;
+import com.maple27.fzuyibao.view.activity.MessageListActivity;
 import com.maple27.fzuyibao.view.activity.StartMessageEntry;
 
-import cn.*;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
@@ -29,8 +27,9 @@ public class MessageUtil {
         //登陆极光im，有异步过程
         RegisterOptionalUserInfo optionalUserInfo = new RegisterOptionalUserInfo();
         optionalUserInfo.setNickname(UserEntity.getNickname());
-        Log.i("MessageUtil", "nickname" + UserEntity.getNickname());
-        JMessageClient.register(account, password, optionalUserInfo, new BasicCallback() {
+        optionalUserInfo.setAddress(UserEntity.getAvatar_path());
+        Log.i("MessageUtil", "avatar:" + UserEntity.getAvatar_path());
+        JMessageClient.register(account,  password, optionalUserInfo, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
                 if(i == 0){
@@ -81,7 +80,7 @@ public class MessageUtil {
 
     //启动聊天窗口（activity）， megetMessageSenderEntity, reciver通过getMessageReciverEntity获得
     public static void startMessageChatActivity(Activity activity, MessageReciverEntity me, MessageReciverEntity reciver){
-        MessageChatActivity.startMessageChatActivity(activity, me, reciver);
+        MessageListActivity.startMessageListActivity(activity, me, reciver);
     }
 
     //启动展示个人信息的窗口，
