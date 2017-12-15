@@ -47,12 +47,23 @@ public class LibraryAdapter extends BaseAdapter {
             super.handleMessage(msg);
             if(msg.what == 10){
                 ViewHolder viewHolder = (ViewHolder) msg.obj;
-                viewHolder.status.setText("已租借");
-                viewHolder.status.setTextColor(context.getResources().getColor(R.color.colorRed));
-                viewHolder.rent.setVisibility(View.INVISIBLE);
+                viewHolder.setSta(1);
+                viewHolder.status.setText("可预约");
+                viewHolder.status.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+                viewHolder.rent.setText("预约");
                 viewHolder.times.setText(""+(Integer.valueOf(bean.getData().getBooks().get(p).getRent_times())+1));
-                viewHolder.deadline.setText("2017-12-26");
+                viewHolder.deadline.setText(bean.getData().getBooks().get(p).getDeadline());
                 Toast.makeText(context, "租借成功，请联系书主", Toast.LENGTH_SHORT).show();
+            }
+            if(msg.what == 1000){
+                ViewHolder viewHolder = (ViewHolder) msg.obj;
+                viewHolder.setSta(0);
+                viewHolder.status.setText("预约已满");
+                viewHolder.status.setTextColor(context.getResources().getColor(R.color.colorRed));
+                viewHolder.times.setText(""+(Integer.valueOf(bean.getData().getBooks().get(p).getRent_times())+1));
+                viewHolder.rent.setVisibility(View.INVISIBLE);
+                viewHolder.deadline.setText(bean.getData().getBooks().get(p).getDeadline());
+                Toast.makeText(context, "预约成功，请到时与借书人联系", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -63,7 +74,7 @@ public class LibraryAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(bean.getData()!=null){
+        if(bean.getData().getBooks()!=null){
             return bean.getData().getBooks().size();
         }else{
             return 0;
@@ -113,24 +124,44 @@ public class LibraryAdapter extends BaseAdapter {
 
         viewHolder.userName.setText(bean.getData().getBooks().get(i).getNickname());
         if(bean.getData().getBooks().get(i).getStatus().equals("1")){
+            viewHolder.setSta(2);
             viewHolder.status.setText("可租借");
             viewHolder.status.setTextColor(context.getResources().getColor(R.color.colorGreen));
+            viewHolder.rent.setText("租借");
             viewHolder.rent.setVisibility(View.VISIBLE);
-        }else{
-            viewHolder.status.setText("已租借");
+        }else if(bean.getData().getBooks().get(i).getStatus().equals("0")&&bean.getData().getBooks().get(i).getWait_status().equals("1")){
+            viewHolder.setSta(1);
+            viewHolder.status.setText("可预约");
+            viewHolder.status.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            viewHolder.rent.setText("预约");
+            viewHolder.rent.setVisibility(View.VISIBLE);
+        }else {
+            viewHolder.setSta(0);
+            viewHolder.status.setText("预约已满");
             viewHolder.status.setTextColor(context.getResources().getColor(R.color.colorRed));
             viewHolder.rent.setVisibility(View.INVISIBLE);
         }
         viewHolder.rent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        NetworkUtil.Rent(handler, bean.getData().getBooks().get(position).getBid(), viewHolder);
-                        p = position;
-                    }
-                }).start();
+                if(viewHolder.getSta()==2){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NetworkUtil.Rent(handler, bean.getData().getBooks().get(position).getBid(), viewHolder);
+                            p = position;
+                        }
+                    }).start();
+                }else if(viewHolder.getSta()==1){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NetworkUtil.Order(handler, bean.getData().getBooks().get(position).getBid(), viewHolder);
+                            p = position;
+                        }
+                    }).start();
+                }
+
             }
         });
         return newView;
@@ -145,7 +176,15 @@ public class LibraryAdapter extends BaseAdapter {
         public TextView deadline;
         public TextView userName;
         public Button rent;
+        public int sta;
 
+        public int getSta() {
+            return sta;
+        }
+
+        public void setSta(int sta) {
+            this.sta = sta;
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.maple27.fzuyibao.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,11 +30,11 @@ import java.util.List;
 
 public class MarketActivity extends AppCompatActivity {
 
+    private Context context;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private CommodityAdapter adapter;
     private List<Fragment> list;
-    private FloatingActionButton post;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,18 +45,11 @@ public class MarketActivity extends AppCompatActivity {
     }
 
     public void init(){
+        context = this;
         viewPager = (ViewPager) findViewById(R.id.vp_market);
         tabLayout = (TabLayout) findViewById(R.id.tab_market);
-        post = (FloatingActionButton) findViewById(R.id.market_post);
         list = new ArrayList<>();
         adapter = new CommodityAdapter(getSupportFragmentManager(), list);
-        post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MarketActivity.this, PostActivity.class);
-                startActivity(intent);
-            }
-        });
         Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_market);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -63,7 +57,7 @@ public class MarketActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             //here 加返回键图片
         }
-        InitUtil.initMarketActivity(viewPager, tabLayout, adapter, list);
+        InitUtil.initMarketActivity(context, viewPager, tabLayout, adapter, list);
         StatusBarUtil.setStatusBar(this);
     }
 

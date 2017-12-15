@@ -114,6 +114,15 @@
                 android:textSize="@dimen/custom_sp_16"
                 />
 
+            <ImageView
+                android:layout_width="@dimen/custom_dp_30"
+                android:layout_height="@dimen/custom_dp_30"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/details_time"
+                android:layout_marginEnd="@dimen/custom_dp_20"
+                android:id="@+id/details_collect"
+                android:src="@drawable/collect1"
+                />
 
 
         </RelativeLayout>

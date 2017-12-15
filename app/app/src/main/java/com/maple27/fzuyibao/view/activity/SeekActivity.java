@@ -3,6 +3,7 @@ package com.maple27.fzuyibao.view.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -40,7 +41,6 @@ public class SeekActivity extends AppCompatActivity {
     private ListView lv;
     private SeekAdapter adapter;
     private SeekBean bean;
-    private FloatingSearchView searchView;
     private SmartRefreshLayout refresh;
     private FloatingActionButton post;
 
@@ -60,6 +60,14 @@ public class SeekActivity extends AppCompatActivity {
                 bean = (SeekBean) msg.obj;
                 adapter.setBean(bean);
                 adapter.notifyDataSetChanged();
+            }
+            if(msg.what == 900){
+                bean = (SeekBean) msg.obj;
+                if(bean.getError_code()==0){
+                    adapter.setBean(bean);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     };
@@ -86,12 +94,11 @@ public class SeekActivity extends AppCompatActivity {
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        searchView = (FloatingSearchView) findViewById(R.id.search_seek);
         refresh = (SmartRefreshLayout) findViewById(R.id.refresh_seek);
         post = (FloatingActionButton) findViewById(R.id.seek_post);
         lv = (ListView) findViewById(R.id.lv_seek);
-        adapter = new SeekAdapter(context, bean);
-        InitUtil.initSeekActivity(application, handler, context, refresh, searchView, adapter, lv, post);
+        adapter = new SeekAdapter(context, bean, handler);
+        InitUtil.initSeekActivity(application, handler, context, refresh, adapter, lv, post);
         setListViewHeightBasedOnChildren(lv);
         StatusBarUtil.setStatusBar(this);
     }

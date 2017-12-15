@@ -11,7 +11,7 @@ public class LibraryBean {
 
     /**
      * error_code : 0
-     * data : {"books":[{"bid":"1","books_name":"白夜行","description":"村上春树","sno":"031502424","rent_times":"1","status":"1","type":"21000","deadline":"--:--","nickname":"哈哈哈哈","avatar_path":"public/avatars/0315024241511457286.jpg","photo":["public/books/03150242415115344031.PNG"]},{"bid":"2","books_name":"三体","description":"暂无图书描述！","sno":"031502424","rent_times":"0","status":"1","type":"23000","deadline":"--:--","nickname":"哈哈哈哈","avatar_path":"public/avatars/0315024241511457286.jpg","photo":["public/books/03150242415115365421.png"]},{"bid":"3","books_name":"白夜行","description":"村上春树","sno":"031502424","rent_times":"0","status":"1","type":"21000","deadline":"--:--","nickname":"哈哈哈哈","avatar_path":"public/avatars/0315024241511457286.jpg","photo":["public/goods/default.jpg"]}]}
+     * data : {"books":[{"bid":"19","books_name":"白夜行","sno":"031502212","rent_times":"0","status":"1","type":"21000","deadline":"--:--","rent_sno":"","wait_sno":"","wait_status":"1","nickname":"hish","avatar_path":"public/avatars/default.jpg","photo":["public/goods/default.jpg"]},{"bid":"20","books_name":"白夜行","sno":"031502212","rent_times":"0","status":"1","type":"21000","deadline":"--:--","rent_sno":"","wait_sno":"","wait_status":"1","nickname":"hish","avatar_path":"public/avatars/default.jpg","photo":["public/goods/default.jpg"]}]}
      */
 
     private int error_code;
@@ -46,27 +46,31 @@ public class LibraryBean {
 
         public static class BooksBean {
             /**
-             * bid : 1
+             * bid : 19
              * books_name : 白夜行
-             * description : 村上春树
-             * sno : 031502424
-             * rent_times : 1
+             * sno : 031502212
+             * rent_times : 0
              * status : 1
              * type : 21000
              * deadline : --:--
-             * nickname : 哈哈哈哈
-             * avatar_path : public/avatars/0315024241511457286.jpg
-             * photo : ["public/books/03150242415115344031.PNG"]
+             * rent_sno :
+             * wait_sno :
+             * wait_status : 1
+             * nickname : hish
+             * avatar_path : public/avatars/default.jpg
+             * photo : ["public/goods/default.jpg"]
              */
 
             private String bid;
             private String books_name;
-            private String description;
             private String sno;
             private String rent_times;
             private String status;
             private String type;
             private String deadline;
+            private String rent_sno;
+            private String wait_sno;
+            private String wait_status;
             private String nickname;
             private String avatar_path;
             private List<String> photo;
@@ -85,14 +89,6 @@ public class LibraryBean {
 
             public void setBooks_name(String books_name) {
                 this.books_name = books_name;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
             }
 
             public String getSno() {
@@ -133,6 +129,30 @@ public class LibraryBean {
 
             public void setDeadline(String deadline) {
                 this.deadline = deadline;
+            }
+
+            public String getRent_sno() {
+                return rent_sno;
+            }
+
+            public void setRent_sno(String rent_sno) {
+                this.rent_sno = rent_sno;
+            }
+
+            public String getWait_sno() {
+                return wait_sno;
+            }
+
+            public void setWait_sno(String wait_sno) {
+                this.wait_sno = wait_sno;
+            }
+
+            public String getWait_status() {
+                return wait_status;
+            }
+
+            public void setWait_status(String wait_status) {
+                this.wait_status = wait_status;
             }
 
             public String getNickname() {

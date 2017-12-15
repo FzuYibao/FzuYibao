@@ -43,21 +43,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.arlib.floatingsearchview.FloatingSearchView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/custom_dp_50"
-        android:layout_below="@id/appbar_seek"
-        android:id="@+id/search_seek"
-        app:floatingSearch_leftActionMode="showSearch"
-        >
-
-    </com.arlib.floatingsearchview.FloatingSearchView>
-
-
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_below="@id/search_seek"
+        android:layout_below="@id/appbar_seek"
         android:id="@+id/refresh_seek"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

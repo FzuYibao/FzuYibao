@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/seek_time"
-        android:textSize="@dimen/custom_sp_20"
+        android:textSize="@dimen/custom_sp_18"
         android:layout_alignTop="@+id/seek_userName"
         android:layout_alignEnd="@+id/seek_connect" />
 
@@ -40,6 +40,27 @@
         android:layout_marginEnd="@dimen/custom_dp_20"
         android:id="@+id/seek_info"
         android:textSize="@dimen/custom_sp_20"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/custom_dp_30"
+        android:layout_height="@dimen/custom_dp_30"
+        android:layout_toLeftOf="@+id/seek_collect"
+        android:layout_marginRight="@dimen/custom_dp_20"
+        android:layout_alignBottom="@+id/seek_connect"
+        android:id="@+id/seek_delete"
+        android:src="@drawable/dustbin"
+        android:visibility="invisible"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/custom_dp_30"
+        android:layout_height="@dimen/custom_dp_30"
+        android:layout_toLeftOf="@+id/seek_connect"
+        android:layout_marginRight="@dimen/custom_dp_20"
+        android:layout_alignBottom="@+id/seek_connect"
+        android:id="@+id/seek_collect"
+        android:src="@drawable/collect1"
         />
 
     <Button

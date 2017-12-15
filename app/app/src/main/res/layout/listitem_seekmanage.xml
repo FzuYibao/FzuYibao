@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/custom_dp_150"
+    >
+
+    <com.maple27.fzuyibao.view.custom_view.CircleImageView
+        android:layout_width="@dimen/custom_dp_40"
+        android:layout_height="@dimen/custom_dp_40"
+        android:layout_margin="@dimen/custom_dp_20"
+        android:id="@+id/sm_avatar"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/sm_avatar"
+        android:layout_alignTop="@+id/sm_avatar"
+        android:id="@+id/sm_userName"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/custom_sp_24"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sm_time"
+        android:textSize="@dimen/custom_sp_18"
+        android:layout_alignTop="@+id/sm_userName"
+        android:layout_alignParentEnd="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sm_userName"
+        android:layout_alignStart="@id/sm_userName"
+        android:layout_marginTop="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_20"
+        android:id="@+id/sm_info"
+        android:textSize="@dimen/custom_sp_20"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/custom_dp_30"
+        android:layout_height="@dimen/custom_dp_30"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/custom_dp_20"
+        android:id="@+id/sm_delete"
+        android:src="@drawable/dustbin"
+        />
+
+
+
+</RelativeLayout>

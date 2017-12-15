@@ -117,11 +117,6 @@
             android:value="976bf293c72d49037901906a" />
 
         <activity android:name=".view.activity.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".view.activity.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -164,7 +159,18 @@
         <activity android:name=".view.activity.DonateActivity"></activity>
         <activity android:name=".view.activity.PostNeedActivity"></activity>
         <activity android:name=".view.activity.CommodityManageActivity"></activity>
+        <activity android:name=".view.activity.SeekManageActivity"></activity>
         <activity android:name=".view.activity.CollectActivity"></activity>
+
+        <activity android:name=".view.activity.StartupHomePage">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name="com.yanzhenjie.album.AlbumActivity"
             android:label="图库"

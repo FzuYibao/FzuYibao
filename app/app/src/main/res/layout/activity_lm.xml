@@ -67,22 +67,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.arlib.floatingsearchview.FloatingSearchView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/custom_dp_50"
-        android:layout_below="@id/appbar"
-        android:id="@+id/search_lm"
-        app:floatingSearch_leftActionMode="showSearch"
-        >
-
-    </com.arlib.floatingsearchview.FloatingSearchView>
-
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_lm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_lm"
+        android:layout_below="@id/appbar"
         android:background="@color/colorPrimary"
         app:tabTextColor="@color/colorPrimary100"
         app:tabSelectedTextColor="@color/colorWhite"

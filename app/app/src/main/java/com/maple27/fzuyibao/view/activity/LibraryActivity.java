@@ -67,6 +67,11 @@ public class LibraryActivity extends AppCompatActivity {
                 adapter.setBean(bean);
                 adapter.notifyDataSetChanged();
             }
+            if(msg.what == 69){
+                bean = (LibraryBean) msg.obj;
+                adapter.setBean(bean);
+                adapter.notifyDataSetChanged();
+            }
         }
     };
 

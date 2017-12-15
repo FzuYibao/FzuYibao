@@ -12,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maple27.fzuyibao.R;
+import com.maple27.fzuyibao.model.bean.CollectBean;
 import com.maple27.fzuyibao.model.bean.CommodityBean;
 import com.maple27.fzuyibao.model.bean.DetailsBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
@@ -50,6 +52,8 @@ public class DetailsActivity extends AppCompatActivity {
     private Button connect;
     private DetailsBean bean;
     private String id;
+    private ImageView collect;
+    private int flag;
 
     final Handler handler = new Handler(){
 
@@ -62,6 +66,16 @@ public class DetailsActivity extends AppCompatActivity {
                 if(bean.getError_code()==0){
                     init();
                 }else Toast.makeText(activity , "获取数据失败" , Toast.LENGTH_SHORT).show();
+            }
+            if(msg.what == 700){
+                CollectBean bean = (CollectBean) msg.obj;
+                if(bean.getError_code() == 0){
+                    if(flag==0){
+                        collect.setBackgroundResource(R.drawable.collect2);
+                        flag=1;
+                        Toast.makeText(activity , "收藏成功" , Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }
     };
@@ -95,6 +109,7 @@ public class DetailsActivity extends AppCompatActivity {
         time = (TextView) findViewById(R.id.details_time);
         avatar = (CircleImageView) findViewById(R.id.details_avatar);
         connect = (Button) findViewById(R.id.details_connect);
+        collect = (ImageView) findViewById(R.id.details_collect);
         banner.setImageLoader(new GlideImageLoader());
         List<String> list = new ArrayList<>();
         if(bean.getData().getGoods().getPhoto()!=null){
@@ -110,6 +125,23 @@ public class DetailsActivity extends AppCompatActivity {
         price.setText("¥"+bean.getData().getGoods().getPrice());
         userName.setText(bean.getData().getGoods().getNickname());
         time.setText(bean.getData().getGoods().getTime());
+        if(!bean.getData().getGoods().getIs_collection().equals("false")){
+            flag = 1;
+            collect.setBackgroundResource(R.drawable.collect2);
+        }else {
+            flag = 0;
+        }
+        collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        NetworkUtil.CollectCommodity(handler,bean.getData().getGoods().getGid());
+                    }
+                }).start();
+            }
+        });
         GlideImageLoader imageLoader = new GlideImageLoader();
         imageLoader.displayImage(activity, MAINURL+bean.getData().getGoods().getAvatar_path(), avatar);
         connect.setOnClickListener(new View.OnClickListener() {

@@ -70,6 +70,42 @@
             />
     </android.support.design.widget.TextInputLayout>
 
+    <!--
+    <ImageView
+        android:layout_width="@dimen/custom_dp_150"
+        android:layout_height="@dimen/custom_dp_50"
+        android:id="@+id/code"
+        android:layout_below="@id/passwordLayout_login"
+        android:layout_marginTop="@dimen/custom_dp_20"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/codeLayout_login"
+        android:textColorHint="@color/colorBlack"
+        android:layout_below="@+id/code"
+        android:layout_marginStart="@dimen/custom_dp_10"
+        android:layout_marginEnd="@dimen/custom_dp_10"
+        app:theme="@style/AppTheme"
+        >
+
+        <EditText
+            android:id="@+id/code_login"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:inputType="textPassword"
+            android:hint="验证码"
+            />
+    </android.support.design.widget.TextInputLayout>
+    -->
+
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"

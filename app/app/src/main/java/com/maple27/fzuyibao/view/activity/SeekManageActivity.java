@@ -6,7 +6,6 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,21 +16,19 @@ import android.widget.Toast;
 
 import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.model.bean.CommodityBean;
-import com.maple27.fzuyibao.presenter.adapter.CollectAdapter;
 import com.maple27.fzuyibao.presenter.adapter.CommodityManageAdapter;
 import com.maple27.fzuyibao.presenter.util.ActivityController;
 import com.maple27.fzuyibao.presenter.util.NetworkUtil;
 import com.maple27.fzuyibao.presenter.util.StatusBarUtil;
 
 /**
- * Created by Maple27 on 2017/12/14.
+ * Created by Maple27 on 2017/12/15.
  */
 
-public class CollectActivity extends AppCompatActivity {
-
+public class SeekManageActivity extends AppCompatActivity {
     private AppCompatActivity activity;
     private ListView listView;
-    private CollectAdapter adapter;
+    private CommodityManageAdapter adapter;
     private CommodityBean bean;
 
     final Handler handler = new Handler(){
@@ -40,47 +37,47 @@ public class CollectActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             //初始化数据
-            if(msg.what == 62){
-                Log.d("zzxc","asda");
+            if(msg.what == 36){
                 bean = (CommodityBean) msg.obj;
                 if(bean.getError_code()==0){
                     init();
                 }else Toast.makeText(activity , "获取数据失败" , Toast.LENGTH_SHORT).show();
-            }else if(msg.what == 700){
+            }else if(msg.what == 46){
                 bean = (CommodityBean) msg.obj;
                 if(bean.getError_code()==0){
                     adapter.setBean(bean);
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(activity , "取消收藏成功" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity , "商品下架成功" , Toast.LENGTH_SHORT).show();
                 }else Toast.makeText(activity , "获取数据失败" , Toast.LENGTH_SHORT).show();
             }
         }
     };
 
-    public CollectActivity(){
+    public SeekManageActivity(){
         super();
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
-                NetworkUtil.GetCollectInfo(handler);
+                NetworkUtil.GetCommodityManageInfo(handler);
             }
-        }).start();
+        }).start();*/
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityController.addActivity(this);
-        setContentView(R.layout.activity_collect);
+        setContentView(R.layout.activity_seekmanage);
+        init();
     }
 
     public void init(){
         activity = this;
-        listView = (ListView) findViewById(R.id.lv_collect);
-        adapter = new CollectAdapter(activity, bean, handler);
+        listView = (ListView) findViewById(R.id.lv_sm);
+        adapter = new CommodityManageAdapter(activity, bean, handler);
         listView.setAdapter(adapter);
         setListViewHeightBasedOnChildren(listView);
-        Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.collect_toolbar);
+        Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.sm_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){

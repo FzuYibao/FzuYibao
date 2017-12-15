@@ -1,5 +1,6 @@
 package com.maple27.fzuyibao.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.presenter.adapter.CommodityAdapter;
@@ -35,6 +37,7 @@ import java.util.List;
 
 public class LMActivity extends AppCompatActivity {
 
+    private Context context;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private CommodityAdapter adapter;
@@ -50,6 +53,7 @@ public class LMActivity extends AppCompatActivity {
     }
 
     public void init(){
+        context = this;
         viewPager = (ViewPager) findViewById(R.id.vp_lm);
         tabLayout = (TabLayout) findViewById(R.id.tab_lm);
         list = new ArrayList<>();
@@ -62,7 +66,7 @@ public class LMActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             //here 加返回键图片
         }
-        InitUtil.initLMActivity(viewPager, tabLayout, adapter, list);
+        InitUtil.initLMActivity(context, viewPager, tabLayout, adapter, list);
         StatusBarUtil.setStatusBar(this);
     }
 

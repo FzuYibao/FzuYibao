@@ -115,7 +115,7 @@ public class InitUtil {
 
             @Override
             public void onSearchAction(String currentQuery) {
-                Toast.makeText(context, currentQuery, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "去里面的板块搜"+currentQuery, Toast.LENGTH_SHORT).show();
                 //搜索请求
             }
         });
@@ -161,7 +161,7 @@ public class InitUtil {
 
     }
 
-    public static void initLMActivity(ViewPager viewPager, final TabLayout tabLayout,
+    public static void initLMActivity(final Context context, ViewPager viewPager, final TabLayout tabLayout,
                                       CommodityAdapter adapter, final List<Fragment> list){
         ////初始化主页视图
         CommodityFragment fragment1 = CommodityFragment.newInstance("11000");
@@ -178,7 +178,7 @@ public class InitUtil {
         }
     }
 
-    public static void initMarketActivity(ViewPager viewPager, final TabLayout tabLayout,
+    public static void initMarketActivity(final Context context, ViewPager viewPager, final TabLayout tabLayout,
                                           CommodityAdapter adapter, final List<Fragment> list){
         ////初始化主页视图
         CommodityFragment fragment1 = CommodityFragment.newInstance("31000");
@@ -219,9 +219,14 @@ public class InitUtil {
             }
 
             @Override
-            public void onSearchAction(String currentQuery) {
-                Toast.makeText(context, currentQuery, Toast.LENGTH_SHORT).show();
+            public void onSearchAction(final String currentQuery) {
                 //搜索请求
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        NetworkUtil.SearchCommodity(handler,context,"20000",currentQuery,0);
+                    }
+                }).start();
             }
         });
         listView.setAdapter(adapter);
@@ -235,7 +240,7 @@ public class InitUtil {
         });
     }
 
-    public static void initSeekActivity(final CustomApplication app, final Handler handler, final Context context, SmartRefreshLayout refresh, FloatingSearchView searchView,
+    public static void initSeekActivity(final CustomApplication app, final Handler handler, final Context context, SmartRefreshLayout refresh,
                                         SeekAdapter adapter, ListView listView, FloatingActionButton post){
         //Refresh控件
         refresh.setOnRefreshListener(new OnRefreshListener() {
@@ -249,19 +254,6 @@ public class InitUtil {
                         NetworkUtil.GetSeekInfo(handler);
                     }
                 }).start();
-            }
-        });
-        //SearchBar控件
-        searchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
-            @Override
-            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-
-            }
-
-            @Override
-            public void onSearchAction(String currentQuery) {
-                Toast.makeText(context, currentQuery, Toast.LENGTH_SHORT).show();
-                //搜索请求
             }
         });
         listView.setAdapter(adapter);

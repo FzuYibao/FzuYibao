@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.model.bean.CommodityBean;
 import com.maple27.fzuyibao.presenter.adapter.CommodityInfoAdapter;
@@ -46,6 +49,7 @@ public class CommodityFragment extends Fragment {
     private View view;
     private SmartRefreshLayout refresh;
     private FloatingActionButton post;
+    private FloatingSearchView searchView;
     private int page = 0;
 
     final Handler handler = new Handler(){
@@ -64,6 +68,11 @@ public class CommodityFragment extends Fragment {
             if(msg.what == 120){
                 CommodityBean bean2 = (CommodityBean) msg.obj;
                 bean.getData().setGoods(bean2.getData().getGoods());
+                adapter.setBean(bean);
+                adapter.notifyDataSetChanged();
+            }
+            if(msg.what == 270){
+                bean = (CommodityBean) msg.obj;
                 adapter.setBean(bean);
                 adapter.notifyDataSetChanged();
             }
@@ -94,6 +103,9 @@ public class CommodityFragment extends Fragment {
         context = getContext();
         post = (FloatingActionButton) view.findViewById(R.id.lm_post);
         refresh = (SmartRefreshLayout) view.findViewById(R.id.refresh_commodity);
+        searchView = (FloatingSearchView) view.findViewById(R.id.search_commodity);
+        lv = (ListView) view.findViewById(R.id.lv_LM);
+        adapter = new CommodityInfoAdapter(context,bean);
         refresh.setPrimaryColors(R.color.colorPrimary);
         refresh.setPrimaryColorsId(R.color.colorPrimary);
         refresh.setOnRefreshListener(new OnRefreshListener() {
@@ -131,8 +143,23 @@ public class CommodityFragment extends Fragment {
                 }).start();
             }
         });
-        lv = (ListView) view.findViewById(R.id.lv_LM);
-        adapter = new CommodityInfoAdapter(context,bean);
+        searchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(final String currentQuery) {
+                page = 0;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        NetworkUtil.SearchCommodity(handler,context,category,currentQuery,page);
+                    }
+                }).start();
+            }
+        });
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -27,6 +27,7 @@ import com.maple27.fzuyibao.model.bean.LoginBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
 import com.maple27.fzuyibao.presenter.util.ActivityController;
 import com.maple27.fzuyibao.presenter.util.FzuCookie;
+import com.maple27.fzuyibao.presenter.util.LoginInterceptor;
 import com.maple27.fzuyibao.presenter.util.NetworkUtil;
 import com.maple27.fzuyibao.presenter.util.ResultCode;
 import com.maple27.fzuyibao.presenter.util.StatusBarUtil;
@@ -35,6 +36,9 @@ import com.maple27.fzuyibao.presenter.util.StringUtil;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -46,6 +50,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -59,19 +65,35 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private ImageView logo;
+    //private ImageView vCode;
     private Context context;
     private Elements tableEles;
     private Button login;
     private EditText sno;
     private EditText password;
+    //private EditText code;
     private LoginBean bean;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private String token;
     public static String MAINURL = "https://interface.fty-web.com/";
+    public static final String VALID_CODE="http://59.77.226.32/captcha.asp";
 
     private static final int SUCCESS = 1;
     private static final int FALL = 2;
+
+    /*final Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            //初始化数据
+            if(msg.what == 2){
+                Bitmap bitmap = (Bitmap) msg.obj;
+                vCode.setImageBitmap(bitmap);
+            }
+        }
+    };*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,9 +112,17 @@ public class LoginActivity extends AppCompatActivity {
     public void init(){
         context = this;
         login = (Button) findViewById(R.id.login);
+        //vCode = (ImageView) findViewById(R.id.code);
         sno = (EditText) findViewById(R.id.sno_login);
         password = (EditText) findViewById(R.id.password_login);
+        //code = (EditText) findViewById(R.id.code_login);
         logo = (ImageView) findViewById(R.id.logo_login);
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getVerifyCode(handler);
+            }
+        }).start();*/
         password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -199,6 +229,7 @@ public class LoginActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String sno1 = sno.getText().toString();
         String password1 = password.getText().toString();
+        //String code1 = code.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -216,6 +247,8 @@ public class LoginActivity extends AppCompatActivity {
             focusView = password;
             cancel = true;
         }
+
+
 
         if (cancel) {
             focusView.requestFocus();
@@ -255,6 +288,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onNext(Integer loginResponse) {
                 switch (loginResponse){
                     case ResultCode.NET_ERROR:
+                        Log.i("net", "网络问题");
                         break;
                     case ResultCode.LOGIN_PWD_ERROR:
                         Log.i("pass", "密码错误");
@@ -322,6 +356,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void loginSuccess(){
+        pref = getSharedPreferences("userData" , MODE_PRIVATE);
+        editor = pref.edit();
+        editor.putString("jwt" , bean.getData().getUser().getJwt());
+        editor.putString("sno" , bean.getData().getUser().getSno());
+        editor.commit();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -346,7 +385,7 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     //失败
                     Log.i("LoginActivity", "afterLoginClientCallBack fail:" + "  i:" + i + "  s:" + s);
-                    Toast.makeText(LoginActivity.this, "登陆失败" + s, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "im登陆失败" + s, Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -356,6 +395,21 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
+    }
+
+    public static Bitmap getVerifyCode(Handler handler) {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().addNetworkInterceptor(new LoginInterceptor()).build();
+        Request request=new Request.Builder().url(VALID_CODE).build();
+        try {
+            ResponseBody responseBody = okHttpClient.newCall(request).execute().body();
+            InputStream in=responseBody.byteStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(in);
+            handler.obtainMessage(2,bitmap).sendToTarget();
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

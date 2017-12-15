@@ -4,6 +4,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/custom_dp_50"
+        android:layout_below="@id/appbar"
+        android:id="@+id/search_commodity"
+        app:floatingSearch_leftActionMode="showSearch"
+        >
+
+    </com.arlib.floatingsearchview.FloatingSearchView>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh_commodity"
         android:layout_width="match_parent"

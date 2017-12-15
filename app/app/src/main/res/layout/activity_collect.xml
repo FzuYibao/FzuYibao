@@ -11,7 +11,7 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/cm_toolbar"
+        android:id="@+id/collect_toolbar"
         app:contentInsetStart="0dp"
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="我的商品"
+            android:text="我的收藏"
             android:textSize="@dimen/custom_sp_24"
             android:textColor="@color/colorWhite"
             />
@@ -36,13 +36,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cm_linear"
+            android:id="@+id/collect_linear"
             android:orientation="vertical">
 
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/lv_cm"
+                android:id="@+id/lv_collect"
                 >
 
             </ListView>

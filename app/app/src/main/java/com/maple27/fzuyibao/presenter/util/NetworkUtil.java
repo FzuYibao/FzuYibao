@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.maple27.fzuyibao.model.bean.CollectBean;
 import com.maple27.fzuyibao.model.bean.CommodityBean;
 import com.maple27.fzuyibao.model.bean.DetailsBean;
 import com.maple27.fzuyibao.model.bean.GetAvatarBean;
@@ -55,21 +56,53 @@ public class NetworkUtil {
     //返回 id
     public static final String MAINURL = "https://interface.fty-web.com/";
     public static final String LOGINURL = "login/login";
+    public static final String GETUSERINFO = "user/get_info";
     public static final String VALID_CODE="http://59.77.226.32/captcha.asp";
     public static final String POSTAVATARURL = "user/update_avatar";
     public static final String POSTURL = "Goods/add_goods";
     public static final String POSTNEEDURL = "Wants/insert_wants";
     public static final String DONATEURL = "Books/donate_books";
     public static final String RENTURL = "Books/rent_books";
+    public static final String ORDERURL = "Books/order_books";
+    public static final String SEARCHURL1 = "Goods/show_goods_by_content";
+    public static final String SEARCHURL2 = "Books/show_books_by_content";
     public static final String GETCOMMODITYURL = "Goods/show_goods_by_type";
     public static final String GETLIBRARYURL = "Books/show_books_by_type";
     public static final String GETDETAILSURL = "Goods/show_all_goods";
     public static final String GETSEEKURL = "Wants/show_all_wants";
     public static final String GETMANAGEURL = "Goods/show_goods_by_sno";
+    public static final String COLLECTURL = "Goods/add_goods_collection";
     public static final String OFFCOMMODITYURL = "Goods/delete_all_goods";
+    public static final String DELETECOLLECTURL = "Goods/delete_goods_collection";
+    public static final String DELETESEEKURL = "Wants/delete_wants";
     public static final String UPDATEUSERMESSAGEURL = "user/update_user_info";
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
     private static final long TIME_OUT=3*1000l;
+
+    public static void LoginByJwt(Handler handler, String jwt, String sno){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , jwt)
+                .add("sno" , sno)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+GETUSERINFO)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("login_by_jwt", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<UserInfoBean>(){}.getType();
+            UserInfoBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(1,bean).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static String getCookieHtml(String targetUrl){
         String html=null;
@@ -415,6 +448,71 @@ public class NetworkUtil {
         }
     }
 
+    public static void Order(Handler handler, String id, LibraryAdapter.ViewHolder viewHolder){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("bid" , id)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+ORDERURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("order", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<LibraryBean>(){}.getType();
+            LibraryBean bean = gson.fromJson(result, type);
+            if(bean.getError_code()==0)
+                handler.obtainMessage(1000, viewHolder).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void SearchCommodity(Handler handler, Context context, String category, String keywords, int page){
+        String result;
+        String URL;
+        if(category.equals("20000")){
+            URL = SEARCHURL2;
+        }else URL = SEARCHURL1;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("content" , keywords)
+                .add("type" , category)
+                .add("page" , page+"")
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+URL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("search", result);
+            Gson gson = new Gson();
+            if(category.equals("20000")){
+                Type type = new TypeToken<LibraryBean>(){}.getType();
+                LibraryBean bean = gson.fromJson(result, type);
+                handler.obtainMessage(69, bean).sendToTarget();
+            }else {
+                Type type = new TypeToken<CommodityBean>(){}.getType();
+                CommodityBean bean = gson.fromJson(result, type);
+                handler.obtainMessage(270, bean).sendToTarget();
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void GetCommodityInfo(int page, String category, Handler handler){
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -542,7 +640,7 @@ public class NetworkUtil {
             Gson gson = new Gson();
             Type type = new TypeToken<CommodityBean>(){}.getType();
             CommodityBean bean = gson.fromJson(result, type);
-            handler.obtainMessage(26, bean).sendToTarget();
+            handler.obtainMessage(62, bean).sendToTarget();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -574,6 +672,31 @@ public class NetworkUtil {
         }
     }
 
+    public static void CollectCommodity(Handler handler, String id){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("gid" , id)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+COLLECTURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("collect", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<CollectBean>(){}.getType();
+            CollectBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(700, bean).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void OffCommodity(Handler handler, String id){
         String result;
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -594,6 +717,58 @@ public class NetworkUtil {
             Type type = new TypeToken<CommodityBean>(){}.getType();
             CommodityBean bean = gson.fromJson(result, type);
             handler.obtainMessage(46, bean).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void DeleteSeek(Handler handler, String id){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("wid" , id)
+                .add("type" , "0")
+                .add("page" , "0")
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+DELETESEEKURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("deleteSeek", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<SeekBean>(){}.getType();
+            SeekBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(900, bean).sendToTarget();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void DeleteCollect(Handler handler,String id){
+        String result;
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Response response;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("jwt" , UserEntity.getJwt())
+                .add("gid", id)
+                .build();
+        Request request = new Request.Builder()
+                .url(MAINURL+DELETECOLLECTURL)
+                .post(requestBody)
+                .build();
+        try {
+            response = okHttpClient.newCall(request).execute();
+            result = new String(response.body().bytes());
+            Log.d("deleteCollect", result);
+            Gson gson = new Gson();
+            Type type = new TypeToken<CommodityBean>(){}.getType();
+            CommodityBean bean = gson.fromJson(result, type);
+            handler.obtainMessage(700, bean).sendToTarget();
         } catch (IOException e) {
             e.printStackTrace();
         }

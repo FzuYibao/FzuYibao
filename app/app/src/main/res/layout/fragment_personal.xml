@@ -64,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/custom_dp_20"
                     android:gravity="center_vertical"
-                    android:text="我的信息"
+                    android:text="个人信息"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_sp_20" />
 
@@ -158,6 +158,45 @@
                 android:layout_height="1dp"
                 android:background="@color/colorPrimaryDark" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/custom_dp_40"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/custom_dp_30"
+                    android:layout_height="@dimen/custom_dp_30"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/need" />
+
+                <TextView
+                    android:id="@+id/personal_seek"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/custom_dp_20"
+                    android:gravity="center_vertical"
+                    android:text="我的需求"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/custom_sp_20" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="65dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="20dp" />
+
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark" />
+
 
 
 
@@ -180,7 +219,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/custom_dp_20"
                     android:gravity="center_vertical"
-                    android:text="注销"
+                    android:text="退出登录"
                     android:textColor="@color/black"
                     android:textSize="@dimen/custom_sp_20" />
 

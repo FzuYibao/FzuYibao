@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.maple27.fzuyibao.view.activity.CommodityManageActivity;
 import com.maple27.fzuyibao.view.activity.InfoActivity;
 import com.maple27.fzuyibao.view.activity.LoginActivity;
 import com.maple27.fzuyibao.view.activity.MainActivity;
+import com.maple27.fzuyibao.view.activity.SeekManageActivity;
 import com.maple27.fzuyibao.view.custom_view.CircleImageView;
 import com.yanzhenjie.album.Album;
 
@@ -48,11 +50,14 @@ public class PersonalFragment extends Fragment {
     private PersonalFragment fragment;
     private Application app;
     private Activity activity;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
     private Context context;
     private CircleImageView avatar;
     private TextView info;
     private TextView collect;
     private TextView commodity;
+    private TextView seek;
     private TextView logoff;
 
     final Handler handler = new Handler(){
@@ -89,6 +94,7 @@ public class PersonalFragment extends Fragment {
         info = (TextView) view.findViewById(R.id.personal_info);
         collect = (TextView) view.findViewById(R.id.personal_collect);
         commodity = (TextView) view.findViewById(R.id.personal_commodity);
+        seek = (TextView) view.findViewById(R.id.personal_seek);
         logoff = (TextView) view.findViewById(R.id.personal_logoff);
         GlideImageLoader imageLoader = new GlideImageLoader();
         imageLoader.displayImage(context, UserEntity.getAvatar_path(), avatar);
@@ -119,11 +125,23 @@ public class PersonalFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        seek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, SeekManageActivity.class);
+                startActivity(intent);
+            }
+        });
         logoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, LoginActivity.class);
                 startActivity(intent);
+                pref = getContext().getSharedPreferences("userData" , Context.MODE_PRIVATE);
+                editor = pref.edit();
+                editor.putString("jwt" , null);
+                editor.putString("sno" , null);
+                editor.commit();
                 activity.finish();
             }
         });
