@@ -8,14 +8,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.maple27.fzuyibao.R;
 import com.maple27.fzuyibao.model.bean.LoginBean;
 import com.maple27.fzuyibao.model.bean.UserInfoBean;
 import com.maple27.fzuyibao.model.entity.UserEntity;
+import com.maple27.fzuyibao.presenter.util.MessageUtil;
 import com.maple27.fzuyibao.presenter.util.NetworkUtil;
 import com.maple27.fzuyibao.presenter.util.StatusBarUtil;
+
+import cn.jpush.im.api.BasicCallback;
 
 /**
  * Created by Maple27 on 2017/12/15.
@@ -62,13 +66,38 @@ public class StartupHomePage extends AppCompatActivity {
                 @Override
                 public void run() {
                     NetworkUtil.LoginByJwt(handler, jwt, sno);
+                    //登陆极光
+                    MessageUtil.loginMessageClient(StartupHomePage.this, sno, "123456", afterLoginClientCallBack());
                 }
             }).start();
         }else{
             time = -1;
         }
-        handler.postDelayed(runnable,2000);
+        handler.postDelayed(runnable,3000);
         StatusBarUtil.setStatusBar(this);
+    }
+
+    //处理登陆极光im的逻辑写在这
+    public BasicCallback afterLoginClientCallBack(){
+        BasicCallback callback = new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                if(i == 0){
+                    //成功
+                    Log.i("LoginActivity", "afterLoginClientCallBack success:" + "  i:" + i + "  s:" + s);
+                    loginSuccess();
+                }else{
+                    //失败
+                    Log.i("LoginActivity", "afterLoginClientCallBack fail:" + "  i:" + i + "  s:" + s);
+                    Toast.makeText(StartupHomePage.this, "im登陆失败" + s, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        return callback;
+    }
+
+    private void loginSuccess() {
+        //登陆极光成功后
     }
 
     public void saveUserEntity(){

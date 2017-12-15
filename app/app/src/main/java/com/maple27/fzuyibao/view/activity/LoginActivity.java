@@ -316,8 +316,8 @@ public class LoginActivity extends AppCompatActivity {
                                 String major = tableEles.select("span[id=ContentPlaceHolder1_LB_zymc]").text();
                                 String grade = tableEles.select("span[id=ContentPlaceHolder1_LB_nj").text();
                                 bean = NetworkUtil.Login(sno, name, grade, major, phone);
-                                MessageUtil.loginMessageClient(LoginActivity.this, sno, "123456", afterLoginClientCallBack());
                                 saveUserEntity();
+                                MessageUtil.loginMessageClient(LoginActivity.this, sno, "123456", afterLoginClientCallBack());
                             }
                         }).start();
                     default:

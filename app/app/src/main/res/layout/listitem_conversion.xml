@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<com.daimajia.swipe.SwipeLayout xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:background="@color/colorRed"
+        android:gravity="center"
+        android:tag="Bottom1"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/trash"
+            android:layout_width="27dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/trash" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_weight="1"
+            app:srcCompat="@drawable/account_black"
+            android:id="@+id/avatar"
+            android:layout_width="0dp"
+            android:layout_height="80dp" />
+
+        <LinearLayout
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="80dp">
+
+
+            <TextView
+                android:gravity="center|left"
+                android:textColor="@color/black"
+                android:id="@+id/title"
+                android:paddingLeft="10dp"
+                android:layout_weight="4"
+                android:textSize="15dp"
+                android:text="title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <TextView
+                android:gravity="center|left"
+                android:id="@+id/content"
+                android:paddingLeft="15dp"
+                android:text="small title"
+                android:textSize="13dp"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp">
+            <TextView
+                android:textSize="10dp"
+                android:singleLine="true"
+                android:id="@+id/time"
+                android:gravity="center"
+                android:text="time"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</com.daimajia.swipe.SwipeLayout>
